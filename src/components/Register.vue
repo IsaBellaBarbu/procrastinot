@@ -54,7 +54,7 @@ export default {
 }
 
 .box {
-  border: 1px solid #132e24;
+  border: 2px solid #132e24;
   padding: 20px;
   max-width: 400px;
   width: 100%;
