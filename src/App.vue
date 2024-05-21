@@ -2,7 +2,6 @@
 import { ref, computed } from 'vue';
 import Login from "@/components/Login.vue";
 import Register from "@/components/Register.vue";
-import Pomodoro from "@/components/Pomodoro.vue";
 import Homebase from "@/components/Homebase.vue";
 
 

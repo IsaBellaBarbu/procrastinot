@@ -1,10 +1,13 @@
 <script>
+import repeatIcon from '@/components/images/arrows.png';
+
 export default {
   data() {
     return {
       time: 1500, // 25 minutes in seconds
       timerRunning: false,
-      timerInterval: null
+      timerInterval: null,
+      repeatImage: repeatIcon // Assign imported image to repeatImage
     };
   },
   computed: {
@@ -15,6 +18,14 @@ export default {
     }
   },
   methods: {
+    toggleTimer() {
+      if (this.timerRunning) {
+        clearInterval(this.timerInterval);
+        this.timerRunning = false;
+      } else {
+        this.startTimer();
+      }
+    },
     startTimer() {
       this.timerRunning = true;
       this.timerInterval = setInterval(() => {
@@ -37,26 +48,60 @@ export default {
 
 <template>
   <div class="pomodoro-timer">
-    <div class="timer">{{ formatTime }}</div>
-    <button @click="startTimer" v-if="!timerRunning">Start</button>
-    <button @click="repeatTimer" v-else>Repeat</button>
+    <div class="timer-container">
+      <div class="timer">{{ formatTime }}</div>
+      <button @click="toggleTimer" :class="{ 'pause-button': timerRunning, 'start-button': !timerRunning }">
+        {{ timerRunning ? 'Pause' : 'Start' }}
+      </button>
+    </div>
+    <button @click="repeatTimer" class="repeat-button">
+      <img :src="repeatImage" alt="Repeat">
+    </button>
   </div>
 </template>
 
+
 <style scoped>
 .pomodoro-timer {
-  width: 200px;
-  height: 100px;
-  border: 1px solid #ccc;
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+}
+
+.timer-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .timer {
   font-size: 24px;
-  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.start-button, .pause-button {
+  width: 100px; /* Adjust button width */
+  height: 40px; /* Adjust button height */
+  border: none;
+  cursor: pointer;
+}
+
+.repeat-button {
+  margin: 30px; /* Add margin to separate the repeat button */
+}
+
+.repeat-button img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.pause-button {
+  background-color: #ff6666; /* Change color when timer is running */
+}
+
+.start-button {
+  background-color: #66ff66; /* Change color when timer is not running */
 }
 </style>
