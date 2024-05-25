@@ -23,6 +23,8 @@ const currentView = computed(() => {
   return routes[currentPath.value.slice(1) || '/'] || NotFound
 })
 //window.location.href = "/login"  zb bei button jmd wo hin senden
+
+
 </script>
 
 

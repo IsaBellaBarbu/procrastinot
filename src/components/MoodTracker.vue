@@ -1,9 +1,9 @@
 <script>
-import smile from '@/components/images/smile.png'
-import okay from '@/components/images/okay.png'
-import neutral from '@/components/images/neutral.png'
-import sad from '@/components/images/sad.png'
-import angry from '@/components/images/angry.png'
+import smile from '@/assets/images/smile.png'
+import okay from '@/assets/images/okay.png'
+import neutral from '@/assets/images/neutral.png'
+import sad from '@/assets/images/sad.png'
+import angry from '@/assets/images/angry.png'
 export default {
 
   data() {

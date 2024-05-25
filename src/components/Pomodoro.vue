@@ -1,5 +1,5 @@
 <script>
-import repeatIcon from '@/components/images/arrows.png';
+import repeatIcon from '@/assets/images/arrows.png';
 
 export default {
   data() {
@@ -8,7 +8,7 @@ export default {
       timerRunning: false,
       timerInterval: null,
       repeatImage: repeatIcon // Assign imported image to repeatImage
-    };
+      };
   },
   computed: {
     formatTime() {
@@ -54,9 +54,9 @@ export default {
         {{ timerRunning ? 'Pause' : 'Start' }}
       </button>
     </div>
-    <button @click="repeatTimer" class="repeat-button">
-      <img :src="repeatImage" alt="Repeat">
-    </button>
+    <v-btn @click="repeatTimer" class="repeat-button material-icons">
+      <v-icon>refresh</v-icon>
+    </v-btn>
   </div>
 </template>
 
@@ -88,13 +88,12 @@ export default {
 
 .repeat-button {
   margin: 30px; /* Add margin to separate the repeat button */
-}
-
-.repeat-button img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 45px;
+  height: 45px;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
 }
 
 .pause-button {
