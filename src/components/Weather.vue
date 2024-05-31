@@ -62,7 +62,7 @@ export default {
 
 <template>
   <div id="main" :class="isDay ? 'day' : 'night'">
-    <div class="container my-5" style="max-width: 400px; min-width: 360px">
+    <div class="container">
       <h1 class="title text-center">Weather in</h1>
       <form class="search-location" v-on:submit.prevent="getWeather">
         <input
@@ -73,22 +73,22 @@ export default {
             autocomplete="off"
         />
       </form>
-      <p class="text-center my-3" v-if="cityFound">No city found</p>
+      <p class="text-center my-3" v-if="cityFound">No city found or no internet connection</p>
       <div
-          class="card rounded my-3 shadow-lg back-card overflow-hidden"
-          v-if="visible">
-
+          class="card glass rounded my-3 shadow-lg overflow-hidden"
+          v-if="visible"
+      >
         <!-- Top of card starts here -->
-        <div class="card-top text-center" style="margin-bottom: 15rem">
+        <div class="card-top text-center">
           <div class="city-name my-3">
             <p>{{ weather.cityName }}</p>
             <span>...</span>
-            <p class="">{{ weather.country }}</p>
+            <p>{{ weather.country }}</p>
           </div>
         </div>
         <!-- top of card ends here -->
 
-        <!--card middle body, card body used cos I want to just update the innerHTML -->
+        <!-- card middle body -->
         <div class="card-body">
           <!-- card middle starts here -->
           <div class="card-mid">
@@ -100,14 +100,8 @@ export default {
             </div>
             <div class="row">
               <div class="col d-flex justify-content-between px-5 mx-5">
-                <p>
-                  <img src="./assets/down.svg" alt="" />
-                  {{ weather.lowTemp }}&deg;C
-                </p>
-                <p>
-                  <img src="./assets/up.svg" alt="" />
-                  {{ weather.highTemp }}&deg;C
-                </p>
+                <p>{{ weather.lowTemp }}&deg;C</p>
+                <p>{{ weather.highTemp }}&deg;C</p>
               </div>
             </div>
           </div>
@@ -121,10 +115,9 @@ export default {
             </div>
             <div class="col text-center">
               <p>{{ weather.humidity }}%</p>
-              <span>humidity</span>
+              <span>Humidity</span>
             </div>
           </div>
-
           <!-- card bottom ends here -->
         </div>
       </div>
@@ -132,95 +125,93 @@ export default {
   </div>
 </template>
 
-
-
-
-
 <style scoped>
 #main {
-  position: absolute;
-  height: 100%;
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #8ecae6; /* Day color */
+  transition: background-color 0.5s ease;
 }
-.day {
-  background: linear-gradient(to bottom left, #d7d3ac, #ffffff);
+#main.night {
+  background-color: #023047; /* Night color */
 }
-.night {
-  background: linear-gradient(to bottom left, #4854a2, #3d3d3d);
-  color: white;
+.container {
+  background-color: transparent;
+  max-width: 400px;
+  min-width: 360px;
+  padding: 20px;
+  border-radius: 16px;
 }
-
 .title {
-  font-size: 50px;
+  font-size: 2rem;
   font-weight: 500;
+  color: #fff;
 }
-
 .form-rounded {
   border-radius: 2rem;
 }
-.back-card {
-  border-radius: 40px !important;
-  color: white;
-  background: linear-gradient(to bottom right, #707070, #434647);
-  text-shadow: 2px 2px 2px #707070;
+.form-control {
+  margin-bottom: 1rem;
 }
-
-.city-name {
-  position: absolute;
-  width: 100%;
-}
-
-.city-name p {
-  font-weight: 400;
-  font-size: 16pt;
-}
-
-.city-name span {
-  position: relative;
-  top: -50px;
-  font-size: 40pt;
-  font-family: "Times New Roman", Times, serif;
-}
-
-.temp span {
-  font-weight: 100;
-  font-size: 5em;
-  letter-spacing: -5px;
-  white-space: nowrap;
-}
-.card-mid {
-  line-height: 0.5;
-}
-.condition {
-  font-size: 1em;
-  font-weight: 700;
-  line-height: 1em;
-  text-transform: capitalize;
-}
-
-.high {
-  font-size: 15px;
-}
-
-.low {
-  font-size: 15px;
-}
-
-.card-bottom p {
-  font-size: 50px;
-  font-weight: 100;
-  letter-spacing: -3px;
-}
-.card-bottom {
-  line-height: 0.5;
-}
-
-.card-bottom span {
-  font-size: 12px;
-}
-
 .form-control:focus {
   box-shadow: none;
   border-color: inherit;
+}
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+.city-name {
+  color: #6f00ff;
+}
+.city-name p {
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: #fff;
+}
+.city-name span {
+  display: block;
+  font-size: 2rem;
+  font-family: "Times New Roman", Times, serif;
+  color: #fff;
+  position: relative;
+  top: -20px;
+}
+.temp span {
+  font-weight: 100;
+  font-size: 5rem;
+  letter-spacing: -5px;
+  white-space: nowrap;
+  color: #fff;
+}
+.card-mid {
+  line-height: 1.5;
+  margin-top: 1rem;
+}
+.card-mid p {
+  color: #fff;
+}
+.card-bottom {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 16px;
+  margin-top: 1rem;
+}
+.card-bottom p {
+  font-size: 1.25rem;
+  font-weight: 100;
+  letter-spacing: -1px;
+  color: #fff;
+}
+.card-bottom span {
+  font-size: 0.75rem;
+  color: #fff;
 }
 </style>

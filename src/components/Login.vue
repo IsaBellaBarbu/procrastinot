@@ -37,7 +37,7 @@ export default {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container ">
     <div class="box" v-if="showLoginForm">
       <h2>Login</h2>
       <form @submit.prevent="login">
@@ -79,11 +79,11 @@ export default {
 
 <style>
 
-.container {
+.container{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  background-color: #5b4b10;
 }
 
 
@@ -92,7 +92,7 @@ export default {
   padding: 35px;
   max-width: 400px;
   width: 100%;
-  background-color: #fff;
+  background-color: #0bde93;
 }
 
 .box h2 {

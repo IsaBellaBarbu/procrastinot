@@ -1,6 +1,7 @@
-/*import { gapi } from 'gapi-script';
+import { gapi } from 'gapi-script';
 
-const CLIENT_ID = '449101608313-f0cu00ejp2jk7qes6nia2dd8h1khd8n0.apps.googleusercontent.com';
+//dont forget to insert const
+const CLIENT_ID = '449101608313-s30n28av6ojdjhmlr7uv4gsjhvr214gd.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyBR4x1tpnZfOqIVeLaKJDf0Ej8D-wVczaI';
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
@@ -13,7 +14,6 @@ export function initClient() {
                 clientId: CLIENT_ID,
                 discoveryDocs: DISCOVERY_DOCS,
                 scope: SCOPES,
-                redirectUri: 'http://localhost:5174' // Add this line
             }).then(() => {
                 gapi.auth2.getAuthInstance().signIn().then(() => {
                     resolve();
@@ -32,4 +32,4 @@ export function fetchEvents() {
         maxResults: 10,
         orderBy: 'startTime'
     }).then(response => response.result.items);
-}*/
+}

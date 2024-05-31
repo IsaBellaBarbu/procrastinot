@@ -1,5 +1,5 @@
 <script>
-/*import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { VCalendar } from 'vuetify/labs/VCalendar';
 import { initClient, fetchEvents } from '../services/googleCalendarService';
 
@@ -65,12 +65,15 @@ export default {
       nextMonth
     };
   }
-};*/
+};
 </script>
 
 
 <template>
   <div class="calendar-container">
+    <v-btn>
+      Fetch Data from Google Calendar
+    </v-btn>
     <v-calendar
         is-expanded
         :attributes="attributes"

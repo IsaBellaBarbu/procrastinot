@@ -28,8 +28,8 @@ export default {
     updateDateTime() {
       const now = new Date();
       const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
-      this.currentDate = now.toLocaleDateString(undefined, dateOptions) + ' ' + now.toLocaleTimeString(undefined, timeOptions);
+      const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour24: true };
+      this.currentDate = now.toLocaleDateString(undefined, dateOptions) + ' | ' + now.toLocaleTimeString(undefined, timeOptions);
 
       // Check if the button should be disabled
       const nextDay = new Date(now);
@@ -63,13 +63,12 @@ export default {
 
 <template>
   <div class="overview">
-    <div class="nametag">
+    <div class="nametag glass">
       <h2>Isa's Homebase</h2>
       <p>{{ currentDate }}</p>
       <button @click="handleClick" :disabled="isButtonDisabled" class="heart-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="heart-icon" height="24px" viewBox="0 -960 960 960" width="24px" fill="currenColor">
+          <path d="M240-400q0 52 21 98.5t60 81.5q-1-5-1-9v-9q0-32 12-60t35-51l113-111 113 111q23 23 35 51t12 60v9q0 4-1 9 39-35 60-81.5t21-98.5q0-50-18.5-94.5T648-574q-20 13-42 19.5t-45 6.5q-62 0-107.5-41T401-690q-39 33-69 68.5t-50.5 72Q261-513 250.5-475T240-400Zm240 52-57 56q-11 11-17 25t-6 29q0 32 23.5 55t56.5 23q33 0 56.5-23t23.5-55q0-16-6-29.5T537-292l-57-56Zm0-492v132q0 34 23.5 57t57.5 23q18 0 33.5-7.5T622-658l18-22q74 42 117 117t43 163q0 134-93 227T480-80q-134 0-227-93t-93-227q0-129 86.5-245T480-840Z"/></svg>
         <span>{{ streak }}</span>
       </button>
     </div>
@@ -78,20 +77,61 @@ export default {
 </template>
 
 <style scoped>
+
+.overview{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #c6fae7, #b7e3f1);
+  border-radius: 10px;
+}
+
+.glass {
+  padding: 5rem;
+  width: 100%;
+  background: rgba(215, 237, 245, 0.47);
+  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
+  backdrop-filter: blur( 5px );
+  -webkit-backdrop-filter: blur( 10px );
+  border-radius: 190px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;  /*pro tip von lukas, abstand zw drin in elems*/
+}
+
+.nametag h2{
+  font-family: monospace;
+  text-align: center;
+
+}
+
+.nametag p{
+  text-align: center;
+  font-family: monospace;
+  font-size: 15px;
+}
+
 .heart-btn {
   border: none;
-  background: none;
+  background: goldenrod;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 1%;
 }
 
 .heart-icon {
-  width: 24px;
-  height: 24px;
+  width: auto;
+  height: 22px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
 }
 
-span {
-  margin-left: 10px;
-}
+
 </style>

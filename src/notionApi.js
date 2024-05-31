@@ -2,7 +2,7 @@ import { Client } from '@notionhq/client';
 
 // Initializing a client
 const notion = new Client({
-    auth: 'secret_JSWXjFd0WRmH8hRnVOmPdlOzoP6UEil0GsakblSNg8u',
+    //dont forget to insert auth
 });
 
 export default notion;

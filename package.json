@@ -3,15 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "serve": "vite preview",
     "build": "vite build",
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve": "nodemon --exec ts-node ./src/server.js",
+    "start": "concurrently \"npm run serve\" \"npm run dev\" "
   },
   "dependencies": {
     "@notionhq/client": "^2.2.15",
     "@popperjs/core": "^2.11.8",
     "axios": "^1.7.2",
+    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "express": "^4.19.2",

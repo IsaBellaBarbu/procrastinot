@@ -117,8 +117,8 @@ export default {
 
             <template v-slot:append>
               <v-expand-x-transition>
-                <v-icon v-if="task.done" color="success">
-                  mdi-check
+                <v-icon  color="success">
+                    check
                 </v-icon>
               </v-expand-x-transition>
             </template>
