@@ -38,12 +38,9 @@ const currentView = computed(() => {
 <template>
   <v-app>
     <v-main>
-      <a href="#/">Homebase </a> |
-      <a href="#/login">Log-In </a> |
-      <a href="#/register">Register Here! </a> |
-      <a href="#/journal">Journal here you bitch </a> |
-      <a href="#/focus-mode">Focus Mode</a>
+      <Dashboard/>
       <component :is="currentView" />
+
 
     </v-main>
   </v-app>

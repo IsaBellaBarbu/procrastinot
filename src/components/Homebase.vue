@@ -1,10 +1,7 @@
 <script>
 import MoodTracker from "@/components/MoodTracker.vue";
 import Overview from "@/components/Overview.vue";
-import Calender from "@/components/Calender.vue";
 import Weather from "@/components/Weather.vue";
-import TodoList from "@/components/TodoList.vue";
-import Dashboard from "@/components/Dashboard.vue";
 import GratitudeList from "@/components/GratitudeList.vue";
 
 
@@ -13,11 +10,8 @@ export default {
   components: {
     MoodTracker,
     Overview,
-    Calender,
     Weather,
-    TodoList,
     GratitudeList,
-    Dashboard
 
   }
 };
@@ -26,7 +20,6 @@ export default {
 <template>
   <div class="homebase">
     <p>Welcome to Homebase!</p>
-        <Dashboard/>
     <div class="content">
       <div class="blues">
         <Overview/>
