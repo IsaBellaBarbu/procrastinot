@@ -52,10 +52,11 @@ export default {
       <button @click="toggleTimer" :class="{ 'pause-button': timerRunning, 'start-button': !timerRunning }">
         {{ timerRunning ? 'Pause' : 'Start' }}
       </button>
-    </div>
-    <v-btn @click="repeatTimer" class="repeat-button material-icons">
+      <v-btn @click="repeatTimer" class="repeat-button material-icons">
       <v-icon>refresh</v-icon>
     </v-btn>
+    </div>
+
   </div>
 </template>
 
@@ -74,7 +75,6 @@ export default {
 
 .pomodoro-timer label{
   display: flex;
-  font-family: monospace;
   color: #000000;
   text-align: center;
   font-size: 15px;
@@ -114,11 +114,11 @@ export default {
 }
 
 .start-button {
-  background-color: #9aec9a; /* Change color when timer is not running */
+  background-color: #9aec9a;
 }
 
 .pause-button {
-  background-color: #ffbaba; /* Change color when timer is running */
+  background-color: #ffbaba;
 }
 
 .repeat-button {

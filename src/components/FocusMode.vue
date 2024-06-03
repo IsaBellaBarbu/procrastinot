@@ -1,12 +1,15 @@
 <script>
 import Pomodoro from "@/components/Pomodoro.vue";
 import TodoList from "@/components/TodoList.vue";
-//import JournalQuicknote from "@/components/JournalQuicknote.vue";
+import JournalQuicknote from "@/components/JournalQuicknote.vue";
 
 export default {
   components: {
     Pomodoro,
-    TodoList
+    TodoList,
+    JournalQuicknote
+
+
   }
 };
 
@@ -15,13 +18,37 @@ export default {
 <template>
 
   <div class="productivity">
-    Here is an overview
+    <p>Now, Let's Focus ... </p>
+    <div class="content">
+      <Pomodoro/>
+      <TodoList/>
+      <JournalQuicknote/>
+    </div>
   </div>
 
-  <Pomodoro/>
-  <TodoList/>
 </template>
 
 <style scoped>
+.productivity{
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+
+.content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+    background-color: #84cead;
+}
+
+p {
+  padding: 40px;
+  font-size: 20px;
+  background-color: #6f00ff;
+}
+
 
 </style>

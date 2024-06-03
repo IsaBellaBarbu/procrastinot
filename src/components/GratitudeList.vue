@@ -61,15 +61,19 @@ export default {
   flex-direction: column;
   padding: 20px;
   border-radius: 16px;
-  background: #d9e4ff;
-  box-shadow: 0 4px 30px rgba(125, 148, 213, 0.88);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.17));
+  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
+  backdrop-filter: blur( 3px );
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
 }
 
 .gratitude-list h1 {
-  font-size: 24px;
-  color: #333;
+  font-size: 20px;
+  color: #ffffff;
   text-align: center;
   padding-bottom: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .entry {

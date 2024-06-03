@@ -1,172 +1,165 @@
-<script>
-export default {
-  data: () => ({
-    tasks: [
-      {
-        done: false,
-        text: 'Foobar',
-      },
-      {
-        done: false,
-        text: 'Fizzbuzz',
-      },
-    ],
-    newTask: null,
-  }),
-
-  computed: {
-    completedTasks () {
-      return this.tasks.filter(task => task.done).length
-    },
-    progress () {
-      return this.completedTasks / this.tasks.length * 100
-    },
-    remainingTasks () {
-      return this.tasks.length - this.completedTasks
-    },
-  },
-
-  methods: {
-    create () {
-      this.tasks.push({
-        done: false,
-        text: this.newTask,
-      })
-
-      this.newTask = null
-    },
-  },
-}
-</script>
-
 <template>
-  <v-container style="max-width: 500px">
-    <v-text-field
-        v-model="newTask"
-        label="What are you working on?"
-        variant="solo"
-        @keydown.enter="create"
-    >
-      <template v-slot:append-inner>
-        <v-fade-transition>
-          <v-btn
-              v-show="newTask"
-              icon="mdi-plus-circle"
-              variant="text"
-              @click="create"
-          ></v-btn>
-        </v-fade-transition>
-      </template>
-    </v-text-field>
-
-    <h2 class="text-h4 text-success ps-4">
-      Tasks:&nbsp;
-      <v-fade-transition leave-absolute>
-        <span :key="`tasks-${tasks.length}`">
-          {{ tasks.length }}
-        </span>
-      </v-fade-transition>
-    </h2>
-
-    <v-divider class="mt-4"></v-divider>
-
-    <v-row
-        align="center"
-        class="my-1"
-    >
-      <strong class="mx-4 text-info-darken-2">
-        Remaining: {{ remainingTasks }}
-      </strong>
-
-      <v-divider vertical></v-divider>
-
-      <strong class="mx-4 text-success-darken-2">
-        Completed: {{ completedTasks }}
-      </strong>
-
-      <v-spacer></v-spacer>
-
-      <v-progress-circular
-          v-model="progress"
-          class="me-2"
-      ></v-progress-circular>
-    </v-row>
-
-    <v-divider class="mb-4"></v-divider>
-
-    <v-card v-if="tasks.length > 0">
-      <v-slide-y-transition
-          class="py-0"
-          tag="v-list"
-          group
-      >
-        <template v-for="(task, i) in tasks" :key="`${i}-${task.text}`">
-          <v-divider
-              v-if="i !== 0"
-              :key="`${i}-divider`"
-          ></v-divider>
-
-          <v-list-item @click="task.done = !task.done">
-            <template v-slot:prepend>
-              <v-checkbox-btn v-model="task.done" color="grey"></v-checkbox-btn>
-            </template>
-
-            <v-list-item-title>
-              <span :class="task.done ? 'text-grey' : 'text-primary'">{{ task.text }}</span>
-            </v-list-item-title>
-
-            <template v-slot:append>
-              <v-expand-x-transition>
-                <v-icon  color="success">
-                    check
-                </v-icon>
-              </v-expand-x-transition>
-            </template>
-          </v-list-item>
-        </template>
-      </v-slide-y-transition>
-    </v-card>
-  </v-container>
+  <div class="todo-list">
+    <h1>Todo List:</h1>
+    <div class="counters">
+      <div class="counter">Tasks: {{ tasksCount }}</div>
+      <div class="counter">Remaining: {{ remainingCount }}</div>
+    </div>
+    <div class="entry" v-for="(todo, index) in todos" :key="index">
+      <input
+          type="checkbox"
+          v-model="todos[index].done"
+          class="checkbox"
+          :id="'checkbox-' + index"
+      />
+      <label :for="'checkbox-' + index" class="checkbox-label">
+        <i class="material-icons">{{ todos[index].done ? 'check_box' : 'check_box_outline_blank' }}</i>
+      </label>
+      <input
+          type="text"
+          v-model="todos[index].text"
+          @keyup.enter="handleEnter(index)"
+          class="input"
+          :class="{ 'done': todos[index].done }"
+          :placeholder="getPlaceholderText(index)"
+          :ref="`input-${index}`"
+      />
+      <button class="delete-button" @click="deleteTodo(index)">
+        <i class="material-icons">delete</i>
+      </button>
+    </div>
+  </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      todos: [{ text: '', done: false }],
+      placeholderText: 'Enter To-Do...',
+    };
+  },
+  computed: {
+    tasksCount() {
+      return this.todos.length;
+    },
+    remainingCount() {
+      return this.todos.filter(todo => !todo.done).length;
+    }
+  },
+  methods: {
+    handleEnter(index) {
+      if (this.todos[index].text !== '') {
+        this.todos.splice(index + 1, 0, { text: '', done: false });
+        this.$nextTick(() => {
+          const nextInput = this.$refs[`input-${index + 1}`][0];
+          if (nextInput) {
+            nextInput.focus();
+          }
+        });
+      }
+    },
+    getPlaceholderText(index) {
+      return this.todos[index].text === '' ? this.placeholderText : '';
+    },
+    deleteTodo(index) {
+      this.todos.splice(index, 1);
+      if (this.todos.length === 0) {
+        this.todos.push({ text: '', done: false });
+      }
+    },
+  },
+};
+</script>
+
 <style scoped>
-.todo-container {
-  max-width: 500px;
-  margin: 0 auto;
-  border: 1px solid #ddd;
-  padding: 16px;
-  border-radius: 8px;
-  background-color: #fff;
+.todo-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 16px;
+  background: #9eecce;
+  box-shadow: 0 4px 30px rgba(31, 136, 97, 0.54);
 }
 
-.text-h4 {
-  margin: 16px 0;
+.todo-list h1 {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  padding-bottom: 20px;
 }
 
-.v-row {
+.counters {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.counter {
+  font-size: 18px;
+}
+
+.entry {
+  display: flex;
   align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 1px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.v-list-item {
-  cursor: pointer;
-}
-
-.v-list-item-title {
+.input {
   flex: 1;
+  border: none;
+  background: none;
+  color: #333;
+  font-size: 16px;
+  padding: 8px;
+  outline: none;
 }
 
-.text-grey {
-  color: grey;
+.input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.checkbox {
+  display: none;
+}
+
+.checkbox-label {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.material-icons {
+  font-size: 24px;
+}
+
+.delete-button {
+  border: none;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.delete-button i {
+  font-size: 20px;
+}
+
+.delete-button:hover i {
+  color: rgba(5, 62, 70, 0.85);
+}
+
+.done {
+  color: #666;
   text-decoration: line-through;
-}
-
-.text-primary {
-  color: #1976d2; /* Primary color */
-}
-
-.v-divider {
-  margin: 8px 0;
 }
 </style>

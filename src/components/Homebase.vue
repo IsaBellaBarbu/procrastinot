@@ -1,10 +1,26 @@
+<template>
+  <div class="homebase">
+    <p>Welcome to Homebase!</p>
+    <v-lazy :min-height="200" :options="{'threshold':0.5}" transition="fade-transition">
+      <div class="content">
+        <div class="blues">
+          <v-lazy><Overview/></v-lazy>
+          <v-lazy><GratitudeList/></v-lazy>
+        </div>
+        <div class="mixed">
+          <v-lazy><Weather/></v-lazy>
+          <v-lazy><MoodTracker/></v-lazy>
+        </div>
+      </div>
+    </v-lazy>
+  </div>
+</template>
+
 <script>
 import MoodTracker from "@/components/MoodTracker.vue";
 import Overview from "@/components/Overview.vue";
 import Weather from "@/components/Weather.vue";
 import GratitudeList from "@/components/GratitudeList.vue";
-
-
 
 export default {
   components: {
@@ -12,32 +28,18 @@ export default {
     Overview,
     Weather,
     GratitudeList,
-
   }
 };
 </script>
-
-<template>
-  <div class="homebase">
-    <p>Welcome to Homebase!</p>
-    <div class="content">
-      <div class="blues">
-        <Overview/>
-        <GratitudeList/>
-      </div>
-      <div class="mixed">
-        <Weather/>
-        <MoodTracker/>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .homebase p{
   text-align: center;
   font-family: monospace;
   font-size: 33px;
+  color: white;
+  padding:32px;
+  font-weight: bold;
 }
 
 .content {
@@ -52,20 +54,17 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(203, 57, 57, 0.1);
   flex-wrap: wrap;
   gap: 5%;
-
+  padding: 32px;    /*Ksenias rec: nur 8-er bereich mit padding UI */
 }
 
 .mixed{
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(201, 182, 246);
   flex-wrap: wrap;
   gap: 5%;
+  padding: 32px;
 }
-
-
 </style>

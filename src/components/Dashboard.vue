@@ -16,19 +16,26 @@ export default {
 
 <template>
   <div id="dashboard">
-    <button @click="toggleDrawer" :class="{ active: drawerOpen }">Dashboard</button>
+    <button @click="toggleDrawer" :class="{ active: drawerOpen }">
+      <span class="material-icons">menu</span> Dashboard
+    </button>
     <div :class="{ 'nav-drawer': true, open: drawerOpen }">
       <p>My Content</p>
+      <div class="divider"></div>
       <a href="#/">Homebase </a>
+      <a href="#/focus-mode">Focus Mode</a>
+      <a href="#/journal">Journal here you bitch </a>
+      <a href="#/stats">My Stats</a>
+      <div class="divider"></div>
       <a href="#/login">Log-In </a>
       <a href="#/register">Register Here! </a>
-      <a href="#/journal">Journal here you bitch </a>
-      <a href="#/focus-mode">Focus Mode</a>
     </div>
   </div>
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 #dashboard {
   position: fixed;
   height: 100%;
@@ -38,9 +45,11 @@ export default {
 button {
   background-color: rgba(158, 104, 253, 0.45);
   backdrop-filter: blur(10px);
-  padding: 10px;
+  padding: 12px;
   font-size: 16px;
   color: white;
+  display: flex;
+  align-items: center;
 }
 
 button:hover {
@@ -48,15 +57,20 @@ button:hover {
   cursor: pointer;
 }
 
+.material-icons {
+  margin-right: 8px;
+  font-size: 24px;
+}
+
 p {
   font-size: 22px;
   padding-top: 10px;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
+  text-align: center;
 }
 
-
 .nav-drawer {
-  width: 200px;
+  width: 190px;
   height: 100%;
   background-color: rgba(158, 104, 253, 0.45);
   backdrop-filter: blur(10px);
@@ -95,7 +109,14 @@ a:hover {
 }
 
 a:active {
-  background: rgba(255, 255, 255, 0.3); /* Slightly less transparent when active */
+  background: rgba(255, 255, 255, 0.3);
   transform: scale(0.98); /* Slightly scale down on active */
+}
+
+.divider {
+  height: 1px;
+  width: 90%;
+  background-color: rgba(255, 255, 255, 0.48);
+  margin: 15px auto;
 }
 </style>

@@ -45,7 +45,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #a0f8a6, rgba(35, 131, 28, 0.34));
+  background: none;
   border-radius: 10px;
 }
 

@@ -78,23 +78,16 @@ export default {
 
 <style scoped>
 
-.overview{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to bottom right, #c6fae7, #b7e3f1);
-  border-radius: 10px;
-}
+
 
 .glass {
   padding: 5rem;
   width: 100%;
-  background: rgba(215, 237, 245, 0.47);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.17));
   box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
-  backdrop-filter: blur( 5px );
-  -webkit-backdrop-filter: blur( 10px );
+  backdrop-filter: blur( 3px );
   border-radius: 190px;
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   display: flex;
   align-content: center;
   justify-content: center;
@@ -105,6 +98,7 @@ export default {
 .nametag h2{
   font-family: monospace;
   text-align: center;
+  color: white;
 
 }
 
@@ -116,7 +110,7 @@ export default {
 
 .heart-btn {
   border: none;
-  background: goldenrod;
+  background: none;
   cursor: pointer;
   display: flex;
   align-items: center;

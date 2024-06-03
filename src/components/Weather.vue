@@ -131,11 +131,13 @@ export default {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #8ecae6; /* Day color */
   transition: background-color 0.5s ease;
 }
 #main.night {
-  background-color: #023047; /* Night color */
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.44), rgba(65, 81, 255, 0.3));
+  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
+  backdrop-filter: blur( 3px );
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
 }
 .container {
   background-color: transparent;
