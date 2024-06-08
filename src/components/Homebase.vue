@@ -40,6 +40,7 @@ export default {
   color: white;
   padding:32px;
   font-weight: bold;
+
 }
 
 .content {

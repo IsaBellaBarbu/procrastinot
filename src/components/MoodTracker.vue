@@ -57,10 +57,10 @@ export default {
   border-radius: 16px;
   padding: 1rem;
   width: 100%;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
+  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
+  backdrop-filter: blur( 3px );
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
 }
 
 .mood-tracker label{

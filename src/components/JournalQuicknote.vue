@@ -2,7 +2,6 @@
 import JournalTemplate from './JournalTemplate.vue';
 import dotted from '@/assets/images/dotted.png'
 
-
 export default {
   name: 'JournalQuicknote',
   components: {
@@ -38,7 +37,7 @@ export default {
 
 <template>
   <div class="journal-quicknote">
-    <div class="content  glass" :style="{ backgroundImage: 'url(' + dotted + ')' }">
+    <div class="content glass" :style="{ backgroundImage: 'url(' + dotted + ')' }">
       <p> Lets Create a Quick Journal entry. </p>
       <div class="backdrop" @click="closeQuicknote" v-if="showCategoryPopup"></div>
       <div class="quicknote-header">
@@ -59,9 +58,7 @@ export default {
           <JournalTemplate :categoryName="selectedCategory" @done="closeCategoryPopup" />
         </div>
       </transition>
-
     </div>
-
   </div>
 </template>
 
@@ -71,39 +68,40 @@ export default {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 640px;
+  height: 100vh;
   border: 1px solid #2c3e50;
   border-radius: 2px;
   background-color: rgba(11, 222, 147, 0.73);
-  padding: 100px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.glass{
+.glass {
   display: flex;
   align-content: center;
   justify-content: center;
   flex-direction: column;
-  padding: 80px;
+  padding: 40px;
   width: 100%;
-  background: rgba(215, 237, 245, 0.47);
-  box-shadow: 0 12px 50px 0 rgba(3, 15, 63, 0.66);
-  backdrop-filter: blur( 5px );
-  -webkit-backdrop-filter: blur( 10px );
+  max-width: 600px;
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
+  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
+  backdrop-filter: blur(3px);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   border-radius: 10px;
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
   gap: 20px;
-
+  box-sizing: border-box;
 }
 
-p{
+p {
   text-align: start;
-  flex-wrap: wrap;
   font-family: monospace;
-  font-size: 20px;
+  font-size: 16px;
   color: #151567;
-  padding: 20px;
-
+  padding: 10px;
+  margin: 0;
 }
+
 .backdrop {
   position: fixed;
   top: 0;
@@ -130,7 +128,7 @@ p{
   -webkit-backdrop-filter: blur(10px);
   padding: 10px 20px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   transition: background 0.3s;
 }
 
@@ -175,7 +173,8 @@ p{
 
 .category-popup {
   position: fixed;
-  width: 100%;
+  width: 90%;
+  max-width: 500px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -185,5 +184,34 @@ p{
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
-</style>
 
+@media (min-width: 768px) {
+  .journal-quicknote {
+    padding: 40px;
+  }
+  .glass {
+    padding: 60px;
+  }
+  p {
+    font-size: 18px;
+  }
+  .category-btn {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .journal-quicknote {
+    padding: 60px;
+  }
+  .glass {
+    padding: 80px;
+  }
+  p {
+    font-size: 20px;
+  }
+  .category-btn {
+    font-size: 18px;
+  }
+}
+</style>

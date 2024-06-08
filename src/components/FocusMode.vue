@@ -8,47 +8,66 @@ export default {
     Pomodoro,
     TodoList,
     JournalQuicknote
-
-
   }
 };
-
 </script>
 
 <template>
-
   <div class="productivity">
     <p>Now, Let's Focus ... </p>
     <div class="content">
-      <Pomodoro/>
-      <TodoList/>
-      <JournalQuicknote/>
+      <div class="left-column">
+        <Pomodoro/>
+        <TodoList/>
+      </div>
+      <div class="right-column">
+        <JournalQuicknote/>
+      </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>
-.productivity{
+.productivity {
   display: flex;
-  text-align: center;
   flex-direction: column;
+  text-align: center;
 }
 
-.content{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    text-align: center;
-    background-color: #84cead;
+.content {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 1%;
+}
+
+.left-column, .right-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.left-column {
+  gap: 10%; /* Adjust gap as needed */
 }
 
 p {
   padding: 40px;
-  font-size: 20px;
-  background-color: #6f00ff;
+  font-size: 33px;
+  color: white;
+  font-weight: bold;
 }
 
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+    align-items: center;
+  }
 
+  .left-column, .right-column {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
 </style>

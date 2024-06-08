@@ -61,7 +61,7 @@ export default {
   flex-direction: column;
   padding: 20px;
   border-radius: 16px;
-  background: linear-gradient(130deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.17));
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
   box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
   backdrop-filter: blur( 3px );
   border: 1.5px solid rgba(255, 255, 255, 0.45);

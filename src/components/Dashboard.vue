@@ -1,6 +1,31 @@
+<template>
+  <div id="dashboard">
+    <button @click="toggleDrawer" :class="{ active: drawerOpen }">
+      <span class="material-icons">menu</span> Dashboard
+    </button>
+    <div :class="{ 'nav-drawer': true, open: drawerOpen }">
+      <p>My Content</p>
+      <div class="divider"></div>
+      <a href="#/" :class="{ active: currentPath.value === '#/' }">Homebase</a>
+      <a href="#/focus-mode" :class="{ active: currentPath.value === '#/focus-mode' }">Focus Mode</a>
+      <a href="#/journal" :class="{ active: currentPath.value === '#/journal' }">Journal</a>
+      <a href="#/stats" :class="{ active: currentPath.value === '#/stats' }">My Stats</a>
+      <div class="divider"></div>
+      <a href="#/login" :class="{ active: currentPath.value === '#/login' }">Log-In</a>
+      <a href="#/register" :class="{ active: currentPath.value === '#/register' }">Register Here!</a>
+    </div>
+  </div>
+</template>
+
 <script>
 export default {
   name: 'Dashboard',
+  props: {
+    currentPath: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       drawerOpen: false
@@ -14,25 +39,6 @@ export default {
 };
 </script>
 
-<template>
-  <div id="dashboard">
-    <button @click="toggleDrawer" :class="{ active: drawerOpen }">
-      <span class="material-icons">menu</span> Dashboard
-    </button>
-    <div :class="{ 'nav-drawer': true, open: drawerOpen }">
-      <p>My Content</p>
-      <div class="divider"></div>
-      <a href="#/">Homebase </a>
-      <a href="#/focus-mode">Focus Mode</a>
-      <a href="#/journal">Journal here you bitch </a>
-      <a href="#/stats">My Stats</a>
-      <div class="divider"></div>
-      <a href="#/login">Log-In </a>
-      <a href="#/register">Register Here! </a>
-    </div>
-  </div>
-</template>
-
 <style scoped>
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
@@ -45,7 +51,7 @@ export default {
 button {
   background-color: rgba(158, 104, 253, 0.45);
   backdrop-filter: blur(10px);
-  padding: 12px;
+  padding: 12px 36px;
   font-size: 16px;
   color: white;
   display: flex;
@@ -102,14 +108,19 @@ a {
   margin: 5px; /* Adjust margin if needed */
 }
 
+a.active {
+  background-color: rgba(255, 0, 0, 0.8); /* Darker red background for active link */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
 a:hover {
-  background: rgba(255, 255, 255, 0.2); /* Slightly less transparent on hover */
+  background-color: rgba(255, 255, 255, 0.2); /* Slightly less transparent on hover */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   transform: scale(1.05); /* Slightly scale up on hover */
 }
 
 a:active {
-  background: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
   transform: scale(0.98); /* Slightly scale down on active */
 }
 

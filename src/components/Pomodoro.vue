@@ -68,8 +68,9 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f5add6, rgba(246, 106, 177, 0.88));
   border-radius: 10px;
+  margin-bottom: 32px;
+
 
 }
 
@@ -78,8 +79,6 @@ export default {
   color: #000000;
   text-align: center;
   font-size: 15px;
-
-
 }
 
 .timer-container {
@@ -89,10 +88,10 @@ export default {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 2rem;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
+  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
+  backdrop-filter: blur( 3px );
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   width: 80%;
   text-align: center;
 }
@@ -101,33 +100,36 @@ export default {
   font-size: 2rem;
   color: #fff;
   width: 100%;
+  padding: 1rem;
+
 }
 
 .start-button, .pause-button {
-  width: 100px; /* Adjust button width */
+  width: 120px; /* Adjust button width */
   height: 40px; /* Adjust button height */
   border: none;
   border-radius: 8px;
   cursor: pointer;
   color: #fff;
   font-size: 1rem;
+  padding: 0.5rem;
 }
 
 .start-button {
-  background-color: #9aec9a;
+  background-color: #adaaff;
 }
 
 .pause-button {
-  background-color: #ffbaba;
+  background-color: #738aff;
 }
 
 .repeat-button {
   width: 50px;
   height: 40px;
   border: 25px;
-  background-color: darkseagreen;
+  background-color: none;
   color: #fff;
-  padding: 0;
+  padding: 1rem;
   cursor: pointer;
   display: flex;
   align-items: center;

@@ -83,8 +83,7 @@ export default {
 .glass {
   padding: 5rem;
   width: 100%;
-  background: linear-gradient(130deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.17));
-  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
   backdrop-filter: blur( 3px );
   border-radius: 190px;
   border: 1.5px solid rgba(255, 255, 255, 0.45);
@@ -93,6 +92,8 @@ export default {
   justify-content: center;
   flex-direction: column;
   gap: 10px;  /*pro tip von lukas, abstand zw drin in elems*/
+  margin-bottom: 32px; /*gives space between component underneath when flex: column*/
+
 }
 
 .nametag h2{

@@ -41,10 +41,10 @@ export default {
   },
   computed: {
     tasksCount() {
-      return this.todos.length;
+      return this.todos.length-1;
     },
     remainingCount() {
-      return this.todos.filter(todo => !todo.done).length;
+      return this.todos.filter(todo => !todo.done).length-1;
     }
   },
   methods: {
@@ -80,13 +80,15 @@ export default {
   flex-direction: column;
   padding: 20px;
   border-radius: 16px;
-  background: #9eecce;
-  box-shadow: 0 4px 30px rgba(31, 136, 97, 0.54);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.17));
+  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
+  backdrop-filter: blur( 3px );
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
 }
 
 .todo-list h1 {
   font-size: 24px;
-  color: #333;
+  color: white;
   text-align: center;
   padding-bottom: 20px;
 }
@@ -96,6 +98,7 @@ export default {
   justify-content: space-between;
   width: 100%;
   margin-bottom: 10px;
+  color: white;
 }
 
 .counter {
@@ -124,7 +127,7 @@ export default {
 }
 
 .input::placeholder {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.71);
 }
 
 .checkbox {
@@ -142,12 +145,12 @@ export default {
 
 .delete-button {
   border: none;
-  color: #333;
+  color: #b5e4ff;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 10px;
 }
 
 .delete-button i {
