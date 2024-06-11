@@ -44,7 +44,6 @@ export default {
 
 #dashboard {
   position: fixed;
-  height: 100%;
   z-index: 2;
 }
 
@@ -77,7 +76,7 @@ p {
 
 .nav-drawer {
   width: 190px;
-  height: 100%;
+  height: 60px;
   background-color: rgba(158, 104, 253, 0.45);
   backdrop-filter: blur(10px);
   color: white;
@@ -90,7 +89,7 @@ p {
 .nav-drawer.open {
   transform: translateX(0);
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-  height: 100%;
+  height: 800px;
 }
 
 a {
