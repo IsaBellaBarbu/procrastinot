@@ -28,7 +28,7 @@ export default {
 
 <template>
   <div class="mood-tracker">
-    <label for="moodInput">Track Mood:</label>
+    <h1 for="moodInput">Track Mood:</h1>
     <div class="mood-buttons glass">
       <button v-for="(emotion, index) in emotions" :key="index" @click="setMood(emotion.image)" :class="{ active: mood === emotion.image }">
         <img :src="emotion.image" alt="Mood">
@@ -45,8 +45,8 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: none;
-  border-radius: 10px;
+  max-width: 310px;
+
 }
 
 .mood-buttons {
@@ -61,16 +61,6 @@ export default {
   box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
   backdrop-filter: blur( 3px );
   border: 1.5px solid rgba(255, 255, 255, 0.45);
-}
-
-.mood-tracker label{
-  display: flex;
-  font-family: monospace;
-  color: #000000;
-  text-align: center;
-  font-size: 15px;
-
-
 }
 
 button {

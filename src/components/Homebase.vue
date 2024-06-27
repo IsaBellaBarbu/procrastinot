@@ -8,9 +8,10 @@
           <v-lazy><GratitudeList/></v-lazy>
         </div>
         <div class="mixed">
-          <v-lazy><Weather/></v-lazy>
           <v-lazy><MoodTracker/></v-lazy>
+          <v-lazy><FollowForFollow/></v-lazy>
         </div>
+        <v-lazy><Weather/></v-lazy>
       </div>
     </v-lazy>
   </div>
@@ -21,6 +22,7 @@ import MoodTracker from "@/components/MoodTracker.vue";
 import Overview from "@/components/Overview.vue";
 import Weather from "@/components/Weather.vue";
 import GratitudeList from "@/components/GratitudeList.vue";
+import FollowForFollow from "@/components/FollowForFollow.vue";
 
 export default {
   components: {
@@ -28,6 +30,7 @@ export default {
     Overview,
     Weather,
     GratitudeList,
+    FollowForFollow
   }
 };
 </script>
@@ -35,10 +38,9 @@ export default {
 <style scoped>
 .homebase p{
   text-align: center;
-  font-family: monospace;
   font-size: 33px;
   color: white;
-  padding:32px;
+  padding:50px;
   font-weight: bold;
 
 }
@@ -49,6 +51,7 @@ export default {
   align-items: center;
   width: 100%;
   transition: margin-left 0.3s ease;
+  color: white;
 }
 
 .blues{
@@ -56,8 +59,8 @@ export default {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 5%;
-  padding: 32px;    /*Ksenias rec: nur 8-er bereich mit padding UI */
+  gap: 10%;
+  padding: 32px;    /*Ksenias rec: only 8-er with padding for UI */
 }
 
 .mixed{
@@ -65,7 +68,9 @@ export default {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 5%;
+  gap: 10%;
   padding: 32px;
 }
 </style>
+
+

@@ -88,7 +88,7 @@ export default {
 }
 
 .entry i {
-  color: rgba(5, 187, 208, 0.78);
+  color: #ffcd6d;
   padding: 10px;
 }
 
@@ -109,7 +109,7 @@ export default {
 
 .delete-button {
   border: none;
-  color: #333;
+  color: #e39c17;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -122,7 +122,7 @@ export default {
 }
 
 .delete-button:hover i {
-  color: rgba(5, 62, 70, 0.85);
+  color: #e39c17;
 }
 </style>
 

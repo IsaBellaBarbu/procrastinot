@@ -64,15 +64,17 @@ export default {
   <div id="main" :class="isDay ? 'day' : 'night'">
     <div class="container">
       <h1 class="title text-center">Weather in</h1>
-      <form class="search-location" v-on:submit.prevent="getWeather">
-        <input
-            type="text"
-            class="form-control text-muted form-rounded p-4 shadow-sm"
-            placeholder="What City?"
-            v-model="citySearch"
-            autocomplete="off"
-        />
-      </form>
+      <div class="form-container">
+        <form class="search-location" v-on:submit.prevent="getWeather">
+          <input
+              type="text"
+              class="form-control text-muted form-rounded p-4 shadow-sm"
+              placeholder="What City?"
+              v-model="citySearch"
+              autocomplete="off"
+          />
+        </form>
+      </div>
       <p class="text-center my-3" v-if="cityFound">No city found or no internet connection</p>
       <div
           class="card glass rounded my-3 shadow-lg overflow-hidden"
@@ -98,12 +100,6 @@ export default {
                 <p class="my-4">{{ weather.description }}</p>
               </div>
             </div>
-            <div class="row">
-              <div class="col d-flex justify-content-between px-5 mx-5">
-                <p>{{ weather.lowTemp }}&deg;C</p>
-                <p>{{ weather.highTemp }}&deg;C</p>
-              </div>
-            </div>
           </div>
           <!-- card middle ends here -->
 
@@ -125,12 +121,12 @@ export default {
   </div>
 </template>
 
+
 <style scoped>
 #main {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
   transition: background-color 0.5s ease;
 }
 #main.night {
@@ -140,22 +136,35 @@ export default {
   border: 1.5px solid rgba(255, 255, 255, 0.45);
 }
 .container {
-  background-color: transparent;
   max-width: 400px;
   min-width: 360px;
   padding: 20px;
   border-radius: 16px;
+  text-align: center; /* Center the contents */
+
 }
 .title {
   font-size: 2rem;
   font-weight: 500;
   color: #fff;
 }
+
+.form-container {
+  display: inline-block; /* Make form container inline-block to center it */
+  width: 100%; /* Optional: Ensures the form takes up the full width */
+}
+
 .form-rounded {
   border-radius: 2rem;
 }
 .form-control {
   margin-bottom: 1rem;
+  text-align: center; /* Center the input text */
+  color: #fff; /* Make input text white */
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+}
+.form-control::placeholder {
+  color: #fde5e5; /* Greyish placeholder text */
 }
 .form-control:focus {
   box-shadow: none;
@@ -197,9 +206,7 @@ export default {
   line-height: 1.5;
   margin-top: 1rem;
 }
-.card-mid p {
-  color: #fff;
-}
+
 .card-bottom {
   background-color: rgba(255, 255, 255, 0.1);
   padding: 1rem;
@@ -217,3 +224,4 @@ export default {
   color: #fff;
 }
 </style>
+
