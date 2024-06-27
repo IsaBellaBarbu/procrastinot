@@ -43,12 +43,19 @@ export default {
         password: this.newPassword
       };
       try {
-        const response = await axios.post('http://localhost:1234/register', newUser);
+        const response = await axios.post('http://localhost:1234/register', newUser,
+            {
+              headers: {
+                "Cache-Control": "no-cache",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+              },
+            });
         console.log(response.data); // Handle response as needed
         alert('User registered successfully!');
       } catch (error) {
         console.error('Registration failed:', error);
-        alert('Registration failed, please try again.');
+        alert('Registration failed, please try again!');
       }
       this.newUsername = '';
       this.newPassword = '';
