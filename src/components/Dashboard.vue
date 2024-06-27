@@ -10,6 +10,7 @@
       <a href="#/focus-mode" :class="{ active: currentPath.value === '#/focus-mode' }">Focus Mode</a>
       <a href="#/journal" :class="{ active: currentPath.value === '#/journal' }">Journal</a>
       <a href="#/stats" :class="{ active: currentPath.value === '#/stats' }">My Stats</a>
+      <a href="#/profile" :class="{ active: currentPath.value === '#/profile' }">Profile</a>
       <div class="divider"></div>
       <a href="#/login" :class="{ active: currentPath.value === '#/login' }">Log-In</a>
       <a href="#/register" :class="{ active: currentPath.value === '#/register' }">Register Here!</a>
@@ -94,33 +95,33 @@ p {
 
 a {
   display: inline-block;
-  background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+  background: rgba(255, 255, 255, 0.1);
   color: white;
   text-decoration: none;
   padding: 10px 20px;
   border-radius: 8px;
-  backdrop-filter: blur(10px); /* Frosted glass effect */
-  -webkit-backdrop-filter: blur(10px); /* For Safari */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Optional border for better visibility */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-  margin: 5px; /* Adjust margin if needed */
+  margin: 5px;
 }
 
 a.active {
-  background-color: rgba(255, 0, 0, 0.8); /* Darker red background for active link */
+  background-color: rgba(255, 0, 0, 0.8);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
 }
 
 a:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* Slightly less transparent on hover */
+  background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-  transform: scale(1.05); /* Slightly scale up on hover */
+  transform: scale(1.05);
 }
 
 a:active {
   background-color: rgba(255, 255, 255, 0.3);
-  transform: scale(0.98); /* Slightly scale down on active */
+  transform: scale(0.98);
 }
 
 .divider {

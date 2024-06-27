@@ -1,34 +1,9 @@
-<script>
-export default {
-  name: 'Register',
-  data() {
-    return {
-      newUsername: '',
-      newPassword: ''
-    };
-  },
-  methods: {
-    register() {
-      this.$emit('register', {
-        username: this.newUsername,
-        password: this.newPassword
-      });
-      this.newUsername = '';
-      this.newPassword = '';
-    },
-    goToLogin() {
-      this.$emit('go-to-login');
-    }
-  }
-};
-</script>
-
 <template>
   <div class="register-container">
     <div class="content-block">
       <div class="info-section">
         <h2>Create an Account for Procrastinot</h2>
-        <p>Join Procrastinot today and start building habits that will help you achieve your goals. Our platform makes it easy to track your progress and stay motivated. Don't wait any longer—sign up now and take the first step towards a better you!</p>
+        <p>Join Procrastinot today and start building habits that will help you achieve your goals. This platform aims towards supporting you, with easily tracking your progress and staying motivated. Hence, don't wait any longer — Sign Up now and take the first step towards a better you!</p>
       </div>
       <div class="divider"></div>
       <div class="form-section">
@@ -39,7 +14,7 @@ export default {
             <input type="text" id="newUsername" v-model="newUsername" required>
           </div>
           <div class="form-group">
-            <label for="newPassword"> Create Password:</label>
+            <label for="newPassword">Create Password:</label>
             <input type="password" id="newPassword" v-model="newPassword" required>
           </div>
           <button type="submit">Sign Up</button>
@@ -50,6 +25,42 @@ export default {
   </div>
 </template>
 
+<script>
+import axios from 'axios';
+
+export default {
+  name: 'Register',
+  data() {
+    return {
+      newUsername: '',
+      newPassword: ''
+    };
+  },
+  methods: {
+    async register() {
+      const newUser = {
+        username: this.newUsername,
+        password: this.newPassword
+      };
+      try {
+        const response = await axios.post('http://localhost:1234/register', newUser);
+        console.log(response.data); // Handle response as needed
+        alert('User registered successfully!');
+      } catch (error) {
+        console.error('Registration failed:', error);
+        alert('Registration failed, please try again.');
+      }
+      this.newUsername = '';
+      this.newPassword = '';
+    },
+    goToLogin() {
+      this.$emit('go-to-login');
+    }
+  }
+};
+</script>
+
+
 <style scoped>
 .register-container {
   display: flex;
@@ -57,7 +68,6 @@ export default {
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, rgb(252, 159, 209), #ff8acc);
   padding: 2rem;
 }
 
@@ -158,8 +168,7 @@ button:hover {
   padding: 0.5rem;
   margin-top: 2rem;
   text-align: center;
-  background: none;
-  border: none;
+
 }
 
 a {
