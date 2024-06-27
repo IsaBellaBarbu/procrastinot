@@ -69,10 +69,6 @@ export default {
   justify-content: center;
   width: 100%;
   height: 100vh;
-  border: 1px solid #2c3e50;
-  border-radius: 2px;
-  background-color: rgba(11, 222, 147, 0.73);
-  padding: 20px;
   box-sizing: border-box;
 }
 
@@ -83,6 +79,7 @@ export default {
   flex-direction: column;
   padding: 40px;
   width: 100%;
+  height: 600px;
   max-width: 600px;
   background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
   box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
@@ -108,14 +105,13 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.73); /* Dark transparent background */
+  background-color: rgba(0, 0, 0, 0.12); /* Dark transparent background */
   z-index: 9998; /* Ensure the backdrop is behind the category popup */
 }
 
 .quicknote-header {
   display: flex;
-  justify-content: flex-end; /* Align items to the right */
-  padding: 10px;
+  justify-content: flex-end;
   position: relative;
 }
 
@@ -145,7 +141,7 @@ p {
   position: absolute;
   top: calc(100% + 5px); /* Adjust positioning */
   right: 0; /* Align dropdown to the right side */
-  background: rgba(255, 255, 255, 0.9); /* Adjust opacity */
+  background: rgba(255, 255, 255, 0.55); /* Adjust opacity */
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   padding: 10px;
@@ -179,9 +175,10 @@ p {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999;
-  background: linear-gradient(to bottom right, rgba(253, 207, 244, 0.59), #f8b7bc);
   padding: 20px;
   border-radius: 10px;
+  backdrop-filter: blur(3px);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -201,11 +198,9 @@ p {
 }
 
 @media (min-width: 1024px) {
-  .journal-quicknote {
-    padding: 60px;
-  }
+
   .glass {
-    padding: 80px;
+    padding: 20px;
   }
   p {
     font-size: 20px;

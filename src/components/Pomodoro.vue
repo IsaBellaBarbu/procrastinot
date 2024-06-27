@@ -51,24 +51,26 @@ export default {
     },
     repeatTimer() {
       clearInterval(this.timerInterval);
-      this.hours = 0;
-      this.minutes = 25;
-      this.seconds = 0;
-      this.timerRunning = false;
+      // Reset to user input values
+      this.timerRunning = false; // Stop the timer if running
+      this.hours = parseInt(this.hoursInput, 10) || 0;
+      this.minutes = parseInt(this.minutesInput, 10) || 0;
+      this.seconds = parseInt(this.secondsInput, 10) || 0;
     },
     updateHours(event) {
-      this.hours = parseInt(event.target.value, 10) || 0;
+      this.hoursInput = parseInt(event.target.value, 10) || 0;
     },
     updateMinutes(event) {
-      this.minutes = parseInt(event.target.value, 10) || 0;
+      this.minutesInput = parseInt(event.target.value, 10) || 0;
     },
     updateSeconds(event) {
-      this.seconds = parseInt(event.target.value, 10) || 0;
+      this.secondsInput = parseInt(event.target.value, 10) || 0;
     }
   }
 };
-
 </script>
+
+
 
 <template>
     <div class="timer-container glass">
@@ -169,6 +171,7 @@ export default {
   width: 100px;
   height: 40px;
   border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   color: #fff;
   font-size: 1rem;
@@ -192,7 +195,8 @@ export default {
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-direction: row;
+  gap: 5%;
 }
 </style>

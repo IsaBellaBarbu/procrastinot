@@ -54,7 +54,7 @@ export default {
 }
 
 .glass{
-  padding: 80px;
+  padding: 40px;
   width: 100%;
   background: rgba(215, 237, 245, 0.47);
   box-shadow: 0 12px 50px 0 rgba(3, 15, 63, 0.66);
@@ -72,8 +72,9 @@ export default {
 
 .category-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
+  flex-direction: column;
   padding-bottom: 20px;
   font-size: 22px;
   font-family: monospace;
@@ -121,8 +122,10 @@ export default {
 }
 
 .save-btn {
+  width: 100px;
+  height: 40px;
   padding: 8px 16px;
-  background-color: rgba(158, 104, 253, 0.45);
+  background-color: #adaaff;
   backdrop-filter: blur(10px);
   font-size: 16px;
   color: white;
@@ -135,7 +138,7 @@ export default {
 }
 
 .save-btn:hover {
-  background-color: rgba(158, 104, 253, 0.25);
+  background-color: #9592ff;
 
 }
 </style>
