@@ -82,7 +82,7 @@ export default {
   height: 600px;
   max-width: 600px;
   background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
-  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
+  box-shadow: 0 8px 32px 0 rgba(217, 220, 234, 0.22);
   backdrop-filter: blur(3px);
   border: 1.5px solid rgba(255, 255, 255, 0.45);
   border-radius: 10px;
@@ -91,12 +91,10 @@ export default {
 }
 
 p {
-  text-align: start;
+  text-align: center;
   font-family: monospace;
-  font-size: 16px;
-  color: #151567;
+  color: #ffffff;
   padding: 10px;
-  margin: 0;
 }
 
 .backdrop {
@@ -119,7 +117,7 @@ p {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #151567; /* Adjust text color */
+  color: #151567;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 10px 20px;

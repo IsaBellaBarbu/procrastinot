@@ -37,8 +37,9 @@
           v-model="todos[index].done"
           class="checkbox"
           :id="'checkbox-' + index"
+          v-if="todos[index].text !== ''"
       />
-      <label :for="'checkbox-' + index" class="checkbox-label">
+      <label :for="'checkbox-' + index" class="checkbox-label" v-if="todos[index].text !== ''">
         <i class="material-icons">{{ todos[index].done ? 'check_box' : 'check_box_outline_blank' }}</i>
       </label>
       <input
@@ -50,7 +51,7 @@
           :placeholder="getPlaceholderText(index)"
           :ref="`input-${index}`"
       />
-      <button class="delete-button" @click="deleteTodo(index)">
+      <button class="delete-button" @click="deleteTodo(index)" v-if="todos[index].text !== ''">
         <i class="material-icons">delete</i>
       </button>
     </div>
@@ -118,8 +119,8 @@ export default {
   flex-direction: column;
   padding: 40px;
   border-radius: 10px;
-  background: linear-gradient(130deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.17));
-  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
+  box-shadow: 0 8px 32px 0 rgba(217, 220, 234, 0.22);
   backdrop-filter: blur(3px);
   border: 1.5px solid rgba(255, 255, 255, 0.45);
   width: 100%;
@@ -184,7 +185,6 @@ export default {
   cursor: pointer;
   margin: 10px;
   color: #ffd23f;
-
 }
 
 .material-icons {
@@ -236,7 +236,6 @@ export default {
 }
 
 .progress-label {
-
   fill: floralwhite;
 }
 </style>

@@ -82,7 +82,6 @@ export default {
 
 .category-name {
   font-weight: bold;
-
 }
 
 .current-date {

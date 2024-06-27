@@ -1,136 +1,275 @@
+<template>
+  <div class="timer-container glass">
+    <!-- Toggle Container -->
+    <div class="toggle-container">
+      <label class="toggle-label">
+        <input type="checkbox" v-model="focusModeOn" class="toggle-input">
+        <span class="toggle-slider"></span>
+      </label>
+      <div class="toggle-text">
+        {{ focusModeOn ? 'Focus Mode Is On!' : 'Break Time, Baby!' }}
+      </div>
+    </div>
+
+    <!-- Timer Controls -->
+    <div class="timer-controls" v-if="focusModeOn">
+      <div class="time">
+        <input
+            class="time-input"
+            type="number"
+            min="0"
+            :max="99"
+            v-model.number="focusHoursInput"
+            @input="updateFocusHours"
+            placeholder="00"
+        />
+        :
+        <input
+            class="time-input"
+            type="number"
+            min="0"
+            :max="59"
+            v-model.number="focusMinutesInput"
+            @input="updateFocusMinutes"
+            placeholder="50"
+        />
+        :
+        <input
+            class="time-input"
+            type="number"
+            min="0"
+            :max="59"
+            v-model.number="focusSecondsInput"
+            @input="updateFocusSeconds"
+            placeholder="00"
+        />
+      </div>
+      <div class="buttons">
+        <button @click="startFocusTimer" :class="{ 'pause-button': focusTimerRunning, 'start-button': !focusTimerRunning }">
+          {{ focusTimerRunning ? 'Pause' : 'Start' }}
+        </button>
+        <v-btn @click="repeatFocusTimer" class="repeat-button material-icons">
+          <v-icon>refresh</v-icon>
+        </v-btn>
+      </div>
+    </div>
+
+    <!-- Timer Controls for Break Mode -->
+    <div class="timer-controls" v-else>
+      <div class="time">
+        <input
+            class="time-input"
+            type="number"
+            min="0"
+            :max="99"
+            v-model.number="breakHoursInput"
+            @input="updateBreakHours"
+            placeholder="00"
+        />
+        :
+        <input
+            class="time-input"
+            type="number"
+            min="0"
+            :max="59"
+            v-model.number="breakMinutesInput"
+            @input="updateBreakMinutes"
+            placeholder="05"
+        />
+        :
+        <input
+            class="time-input"
+            type="number"
+            min="0"
+            :max="59"
+            v-model.number="breakSecondsInput"
+            @input="updateBreakSeconds"
+            placeholder="00"
+        />
+      </div>
+      <div class="buttons">
+        <button @click="startBreakTimer" :class="{ 'pause-button': breakTimerRunning, 'start-button': !breakTimerRunning }">
+          {{ breakTimerRunning ? 'Pause' : 'Start' }}
+        </button>
+        <v-btn @click="repeatBreakTimer" class="repeat-button material-icons">
+          <v-icon>refresh</v-icon>
+        </v-btn>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script>
 export default {
   data() {
     return {
-      hours: 0,
-      minutes: 25,
-      seconds: 0,
-      timerRunning: false,
-      timerInterval: null,
+      focusHoursInput: 0,
+      focusMinutesInput: 50,
+      focusSecondsInput: 0,
+      focusTimerRunning: false,
+      focusTimerInterval: null,
+      initialFocusHours: 0,
+      initialFocusMinutes: 50,
+      initialFocusSeconds: 0,
+      breakHoursInput: 0,
+      breakMinutesInput: 10,
+      breakSecondsInput: 0,
+      breakTimerRunning: false,
+      breakTimerInterval: null,
+      initialBreakHours: 0,
+      initialBreakMinutes: 10,
+      initialBreakSeconds: 0,
+      focusModeOn: true, // Start with focus mode on
     };
   },
   computed: {
-    formatTime() {
-      const formattedHours = String(this.hours).padStart(2, '0');
-      const formattedMinutes = String(this.minutes).padStart(2, '0');
-      const formattedSeconds = String(this.seconds).padStart(2, '0');
-      return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    totalFocusTimeInSeconds() {
+      return this.focusHoursInput * 3600 + this.focusMinutesInput * 60 + this.focusSecondsInput;
     },
-    totalTimeInSeconds() {
-      return this.hours * 3600 + this.minutes * 60 + this.seconds;
+    totalBreakTimeInSeconds() {
+      return this.breakHoursInput * 3600 + this.breakMinutesInput * 60 + this.breakSecondsInput;
     }
   },
   methods: {
-    toggleTimer() {
-      if (this.timerRunning) {
-        clearInterval(this.timerInterval);
-        this.timerRunning = false;
-      } else {
-        this.startTimer();
+    startFocusTimer() {
+      if (!this.focusTimerRunning) {
+        this.focusTimerRunning = true;
+        this.focusTimerInterval = setInterval(() => {
+          if (this.totalFocusTimeInSeconds > 0) {
+            if (this.focusSecondsInput > 0) {
+              this.focusSecondsInput--;
+            } else if (this.focusMinutesInput > 0) {
+              this.focusMinutesInput--;
+              this.focusSecondsInput = 59;
+            } else if (this.focusHoursInput > 0) {
+              this.focusHoursInput--;
+              this.focusMinutesInput = 59;
+              this.focusSecondsInput = 59;
+            }
+          } else {
+            clearInterval(this.focusTimerInterval);
+            this.focusTimerRunning = false;
+          }
+        }, 1000);
       }
     },
-    startTimer() {
-      this.timerRunning = true;
-      this.timerInterval = setInterval(() => {
-        if (this.totalTimeInSeconds > 0) {
-          if (this.seconds > 0) {
-            this.seconds--;
-          } else if (this.minutes > 0) {
-            this.minutes--;
-            this.seconds = 59;
-          } else if (this.hours > 0) {
-            this.hours--;
-            this.minutes = 59;
-            this.seconds = 59;
+    repeatFocusTimer() {
+      clearInterval(this.focusTimerInterval);
+      this.focusHoursInput = this.initialFocusHours;
+      this.focusMinutesInput = this.initialFocusMinutes;
+      this.focusSecondsInput = this.initialFocusSeconds;
+      this.focusTimerRunning = false;
+    },
+    startBreakTimer() {
+      if (!this.breakTimerRunning) {
+        this.breakTimerRunning = true;
+        this.breakTimerInterval = setInterval(() => {
+          if (this.totalBreakTimeInSeconds > 0) {
+            if (this.breakSecondsInput > 0) {
+              this.breakSecondsInput--;
+            } else if (this.breakMinutesInput > 0) {
+              this.breakMinutesInput--;
+              this.breakSecondsInput = 59;
+            } else if (this.breakHoursInput > 0) {
+              this.breakHoursInput--;
+              this.breakMinutesInput = 59;
+              this.breakSecondsInput = 59;
+            }
+          } else {
+            clearInterval(this.breakTimerInterval);
+            this.breakTimerRunning = false;
           }
-        } else {
-          clearInterval(this.timerInterval);
-          this.timerRunning = false;
-        }
-      }, 1000);
+        }, 1000);
+      }
     },
-    repeatTimer() {
-      clearInterval(this.timerInterval);
-      // Reset to user input values
-      this.timerRunning = false; // Stop the timer if running
-      this.hours = parseInt(this.hoursInput, 10) || 0;
-      this.minutes = parseInt(this.minutesInput, 10) || 0;
-      this.seconds = parseInt(this.secondsInput, 10) || 0;
+    repeatBreakTimer() {
+      clearInterval(this.breakTimerInterval);
+      this.breakHoursInput = this.initialBreakHours;
+      this.breakMinutesInput = this.initialBreakMinutes;
+      this.breakSecondsInput = this.initialBreakSeconds;
+      this.breakTimerRunning = false;
     },
-    updateHours(event) {
-      this.hoursInput = parseInt(event.target.value, 10) || 0;
+    updateFocusHours(event) {
+      this.focusHoursInput = parseInt(event.target.value, 10) || 0;
+      this.initialFocusHours = this.focusHoursInput;
     },
-    updateMinutes(event) {
-      this.minutesInput = parseInt(event.target.value, 10) || 0;
+    updateFocusMinutes(event) {
+      this.focusMinutesInput = parseInt(event.target.value, 10) || 0;
+      this.initialFocusMinutes = this.focusMinutesInput;
     },
-    updateSeconds(event) {
-      this.secondsInput = parseInt(event.target.value, 10) || 0;
+    updateFocusSeconds(event) {
+      this.focusSecondsInput = parseInt(event.target.value, 10) || 0;
+      this.initialFocusSeconds = this.focusSecondsInput;
+    },
+    updateBreakHours(event) {
+      this.breakHoursInput = parseInt(event.target.value, 10) || 0;
+      this.initialBreakHours = this.breakHoursInput;
+    },
+    updateBreakMinutes(event) {
+      this.breakMinutesInput = parseInt(event.target.value, 10) || 0;
+      this.initialBreakMinutes = this.breakMinutesInput;
+    },
+    updateBreakSeconds(event) {
+      this.breakSecondsInput = parseInt(event.target.value, 10) || 0;
+      this.initialBreakSeconds = this.breakSecondsInput;
+    }
+  },
+  watch: {
+    focusModeOn(newValue) {
+      // Reset timers and states when switching modes
+      if (!newValue) {
+        clearInterval(this.focusTimerInterval);
+        this.focusTimerRunning = false;
+        this.repeatBreakTimer();
+      } else {
+        clearInterval(this.breakTimerInterval);
+        this.breakTimerRunning = false;
+        this.repeatFocusTimer();
+      }
     }
   }
 };
 </script>
 
-
-
-<template>
-    <div class="timer-container glass">
-      <input
-          class="time-input"
-          type="number"
-          min="0"
-          :max="99"
-          v-model.number="hours"
-          @input="updateHours"
-          placeholder="00"
-      />
-      :
-      <input
-          class="time-input"
-          type="number"
-          min="0"
-          :max="59"
-          v-model.number="minutes"
-          @input="updateMinutes"
-          placeholder="25"
-      />
-      :
-      <input
-          class="time-input"
-          type="number"
-          min="0"
-          :max="59"
-          v-model.number="seconds"
-          @input="updateSeconds"
-          placeholder="00"
-      />
-      <button @click="toggleTimer" :class="{ 'pause-button': timerRunning, 'start-button': !timerRunning }">
-        {{ timerRunning ? 'Pause' : 'Start' }}
-      </button>
-      <v-btn @click="repeatTimer" class="repeat-button material-icons">
-        <v-icon>refresh</v-icon>
-      </v-btn>
-    </div>
-</template>
-
-
-
-
-
 <style scoped>
 .timer-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 40px;
   background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
-  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
+  box-shadow: 0 8px 32px 0 rgba(217, 220, 234, 0.22);
   backdrop-filter: blur(3px);
   border: 1.5px solid rgba(255, 255, 255, 0.45);
   width: 100%;
   margin-bottom: 32px;
+  position: relative; /* Ensure positioning context */
+}
+
+.timer-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row; /* Row by default */
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Wrap elements to handle smaller screens */
+}
+
+@media (max-width: 768px) {
+  .timer-controls {
+    flex-direction: column; /* Change to column for smaller screens */
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap; /* Ensure buttons wrap properly */
 }
 
 .time-input {
@@ -145,26 +284,64 @@ export default {
   outline: none;
 }
 
-@media (max-width: 600px) {
-  .time-input {
-    font-size: 1.5rem;
-    width: 3.5rem;
-    margin: 0 0.3rem;
-  }
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 80%; /* Occupy full width of parent */
+  margin-bottom: 20px; /* Adjust spacing as needed */
+}
 
-  .start-button, .pause-button, .repeat-button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-    padding: 0.3rem;
-    margin: 0.3rem;
-  }
+.toggle-label {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
 
-  .timer-container {
-    width: 100%;
-    padding: 15px;
-  }
+.toggle-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(177, 137, 245, 0.9);
+  border-radius: 34px;
+  transition: .4s;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .4s;
+}
+
+.toggle-input:checked + .toggle-slider {
+  background-color: rgba(248, 187, 255, 0.91);
+}
+
+.toggle-input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+.toggle-text {
+  margin-top: 20px;
+  color: #fff;
+  font-size: 24px;
 }
 
 .start-button, .pause-button {
@@ -175,8 +352,8 @@ export default {
   cursor: pointer;
   color: #fff;
   font-size: 1rem;
-  padding: 0.5rem;
-  margin-left: 20px;
+  margin-left: 30px;
+  margin-top: 1rem;
 }
 
 .start-button {
@@ -188,15 +365,14 @@ export default {
 }
 
 .repeat-button {
-  width: 25px;
+  width: 45px;
   height: 20px;
   color: #fff;
-  padding: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   flex-direction: row;
-  gap: 5%;
+  margin-top: 15px;
 }
 </style>
