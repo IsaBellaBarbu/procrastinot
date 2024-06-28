@@ -14,11 +14,13 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Overview',
   data() {
     return {
-      username: localStorage.getItem('username') || '', // Fetch username from local storage
+      username: localStorage.getItem('username') || '',
       streak: 0,
       lastClickedDate: null,
       currentDate: '',
@@ -26,18 +28,22 @@ export default {
     };
   },
   methods: {
-    handleClick() {
+    async handleClick() {
       const now = new Date();
       const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
       if (!this.lastClickedDate || this.lastClickedDate.getTime() !== today.getTime()) {
         if (this.isButtonDisabled) {
-          // User tried to click before 00:00 of the following day
           return;
         }
         this.lastClickedDate = today;
         this.streak++;
-        // Save streak count and last clicked date to local storage
+        try {
+          await axios.post(`http://localhost:1234/streak/${this.username}`, { streak: this.streak });
+          console.log('Streak updated successfully');
+        } catch (error) {
+          console.error('Error updating streak:', error);
+        }
         localStorage.setItem('streakCount', this.streak.toString());
         localStorage.setItem('lastClickedDate', today.toISOString());
       }
@@ -47,29 +53,24 @@ export default {
       const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour24: true };
       this.currentDate = now.toLocaleDateString(undefined, dateOptions) + ' | ' + now.toLocaleTimeString(undefined, timeOptions);
-
-      // Check if the button should be disabled
       const nextDay = new Date(now);
       nextDay.setDate(nextDay.getDate() + 1);
       nextDay.setHours(0, 0, 0, 0);
       this.isButtonDisabled = now >= nextDay;
     },
-    loadStreakAndLastClickedDate() {
-      // Load streak count and last clicked date from local storage
-      const storedStreak = localStorage.getItem('streakCount');
-      const storedLastClickedDate = localStorage.getItem('lastClickedDate');
-      if (storedStreak !== null) {
-        this.streak = parseInt(storedStreak);
-      }
-      if (storedLastClickedDate !== null) {
-        this.lastClickedDate = new Date(storedLastClickedDate);
+    async loadStreak() {
+      try {
+        const response = await axios.get(`http://localhost:1234/streak/${this.username}`);
+        this.streak = response.data.streak;
+        console.log('Streak loaded:', this.streak);
+      } catch (error) {
+        console.error('Error fetching streak:', error);
       }
     }
   },
   mounted() {
-    this.loadStreakAndLastClickedDate(); // Load streak count and last clicked date when component is mounted
+    this.loadStreak();
     this.updateDateTime();
-    // Update date and time every second
     this.intervalId = setInterval(this.updateDateTime, 1000);
   },
   beforeDestroy() {
@@ -77,6 +78,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .glass {
@@ -91,8 +93,8 @@ export default {
   align-content: center;
   justify-content: center;
   flex-direction: column;
-  gap: 10px;  /*pro tip von lukas, abstand zw drin in elems*/
-  margin-bottom: 32px; /*gives space between component underneath when flex: column*/
+  gap: 10px;
+  margin-bottom: 32px;
 }
 
 .nametag h2 {

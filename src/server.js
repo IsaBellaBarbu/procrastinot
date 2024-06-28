@@ -45,14 +45,45 @@ app.post('/login', async (req, res) => {
             if (!isPasswordValid) {
                 return res.status(401).json({ message: 'Invalid credentials' });
             }
-            // For now, we return the username
-            res.status(200).json({ message: `User ${user.u_name} logged in successfully`, username: user.u_name });
+            res.status(200).json({ message: `User ${user.u_name} logged in successfully`, username: user.u_name, streak: user.u_streak });
         });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 });
 
+// Route to fetch or update streak count
+app.route('/streak/:username')
+    .get((req, res) => {
+        const { username } = req.params;
+        try {
+            db.get('SELECT u_streak FROM user WHERE u_name = ?', [username], (err, row) => {
+                if (err) {
+                    return res.status(500).json({ error: err.message });
+                }
+                if (!row) {
+                    return res.status(404).json({ error: 'User not found' });
+                }
+                res.status(200).json({ streak: row.u_streak });
+            });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    })
+    .post((req, res) => {
+        const { username } = req.params;
+        const { streak } = req.body;
+        try {
+            db.run('UPDATE user SET u_streak = ? WHERE u_name = ?', [streak, username], function (err) {
+                if (err) {
+                    return res.status(500).json({ error: err.message });
+                }
+                res.status(200).json({ message: 'Streak updated successfully' });
+            });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    });
 
 // important for testing
 app.listen(port, () => {
@@ -88,4 +119,3 @@ app.delete('/unfollow', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-
