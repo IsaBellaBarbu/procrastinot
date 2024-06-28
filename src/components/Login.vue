@@ -14,13 +14,15 @@
           </div>
           <button type="submit">Sign In</button>
         </form>
-        <p class="register-link">Don't have an account? <a href="#" @click="showRegister">Register</a></p>
+        <p class="register-link">Don't have an account? <a href="#/register">Register</a></p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Login',
   data() {
@@ -33,35 +35,24 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await fetch('http://localhost:1234/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username: this.username, password: this.password })
+        const response = await axios.post('http://localhost:1234/login', {
+          username: this.username,
+          password: this.password
         });
-        const data = await response.json();
-        if (response.ok) {
-          alert(data.message);
-          localStorage.setItem('token', data.token); // If you are using a token
-          localStorage.setItem('username', data.username); // Store the username
-          window.location.hash = '/';
-        } else {
-          console.error('Login failed:', data.message);
-          alert('Login failed: ' + data.message);
-        }
+        const { username } = response.data;
+        localStorage.setItem('username', username); // Store the username in localStorage
+
+        alert(`User ${username} logged in successfully`);
+        // Redirect or update UI as needed after successful login
+        window.location.hash = '#/';
       } catch (error) {
-        console.error('Login error:', error);
-        alert('Login error: ' + error.message);
+        console.error('Login error:', error.response ? error.response.data.message : error.message);
+        alert('Login failed: ' + (error.response ? error.response.data.message : error.message));
       }
-    },
-    showRegister() {
-      window.location.hash = '/register';
     }
   }
 };
 </script>
-
 
 <style scoped>
 .login-container {

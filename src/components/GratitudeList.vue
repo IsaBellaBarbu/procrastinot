@@ -1,9 +1,33 @@
+<template>
+  <div class="gratitude-list">
+    <h1>Things I am grateful for today:</h1>
+    <div class="entry" v-for="(entry, index) in entries" :key="index">
+      <i class="material-icons" v-if="entry !== ''">favorite</i>
+      <input
+          type="text"
+          v-model="entries[index]"
+          @keydown.enter="handleEnter(index)"
+          class="input"
+          :placeholder="getPlaceholderText(index)"
+          :ref="`input-${index}`"
+      />
+      <button class="delete-button" @click="deleteEntry(index)">
+        <i class="material-icons">delete</i>
+      </button>
+    </div>
+    <button @click="saveEntries" class="save-button">Save Entries</button>
+  </div>
+</template>
+
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       entries: [''],
       placeholderText: 'Type something...',
+      userId: null, // Ensure to set the logged-in user's ID
     };
   },
   methods: {
@@ -27,31 +51,31 @@ export default {
         this.entries.push('');
       }
     },
+    saveEntries() {
+      const date = new Date().toISOString(); // Use current date for g_date
+      this.entries.forEach(entry => {
+        if (entry.trim() !== '') {
+          axios.post('http://localhost:1234/saveGratitude', {
+            content: entry,
+            userId: this.userId,
+            date: date,
+          })
+              .then(response => {
+                console.log(response.data.message);
+              })
+              .catch(error => {
+                console.error('Error saving gratitude entry:', error);
+              });
+        }
+      });
+    },
+  },
+  mounted() {
+    // Simulate user login
+    this.userId = 3; // Replace with actual logic to get logged-in user's ID
   },
 };
 </script>
-
-<template>
-  <div class="gratitude-list">
-    <h1>Things I am grateful for today:</h1>
-    <div class="entry" v-for="(entry, index) in entries" :key="index">
-      <i class="material-icons" v-if="entry !== ''">favorite</i>
-      <input
-          type="text"
-          v-model="entries[index]"
-          @keydown.enter="handleEnter(index)"
-          class="input"
-          :placeholder="getPlaceholderText(index)"
-          :ref="`input-${index}`"
-      />
-      <button class="delete-button" @click="deleteEntry(index)">
-        <i class="material-icons">delete</i>
-      </button>
-    </div>
-  </div>
-</template>
-
-
 
 <style scoped>
 .gratitude-list {
@@ -62,8 +86,8 @@ export default {
   padding: 20px;
   border-radius: 16px;
   background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
-  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
-  backdrop-filter: blur( 3px );
+  box-shadow: 0 8px 32px 0 rgba(217, 220, 234, 0.22);
+  backdrop-filter: blur(3px);
   border: 1.5px solid rgba(255, 255, 255, 0.45);
 }
 
@@ -104,7 +128,6 @@ export default {
 
 .input::placeholder {
   color: rgba(0, 0, 0, 0.5);
-
 }
 
 .delete-button {
@@ -124,5 +147,18 @@ export default {
 .delete-button:hover i {
   color: #e39c17;
 }
-</style>
 
+.save-button {
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.save-button:hover {
+  background-color: #45a049;
+}
+</style>

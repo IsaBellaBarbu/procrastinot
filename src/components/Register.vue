@@ -19,13 +19,15 @@
           </div>
           <button type="submit">Sign Up</button>
         </form>
-        <p class="login-link">Already have an account? <a href="#" @click="showLogin">Back to Login</a></p>
+        <p class="login-link">Already have an account? <router-link to="/login">Back to Login</router-link></p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Register',
   data() {
@@ -37,28 +39,16 @@ export default {
   methods: {
     async register() {
       try {
-        const response = await fetch('http://localhost:1234/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username: this.newUsername, password: this.newPassword })
+        const response = await axios.post('http://localhost:1234/register', {
+          username: this.newUsername,
+          password: this.newPassword
         });
-        const data = await response.json();
-        if (response.ok) {
-          alert('User registered successfully');
-          window.location.hash = '/login';
-        } else {
-          console.error('Registration failed:', data.message);
-          alert('Registration failed: ' + data.message);
-        }
+        alert('User registered successfully');
+        this.$router.push('/login'); // Redirect to login after successful registration
       } catch (error) {
-        console.error('Registration error:', error);
-        alert('Registration error: ' + error.message);
+        console.error('Registration error:', error.response ? error.response.data.message : error.message);
+        alert('Registration failed: ' + (error.response ? error.response.data.message : error.message));
       }
-    },
-    showLogin() {
-      window.location.hash = '/login';
     }
   }
 };

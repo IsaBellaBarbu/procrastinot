@@ -45,7 +45,19 @@ app.post('/login', async (req, res) => {
             if (!isPasswordValid) {
                 return res.status(401).json({ message: 'Invalid credentials' });
             }
-            res.status(200).json({ message: `User ${user.u_name} logged in successfully`, username: user.u_name, streak: user.u_streak });
+            // Fetch friends
+            db.all('SELECT u_name, u_streak FROM user JOIN user_follow ON user.u_id = user_follow.fk_followed_u_id WHERE user_follow.fk_u_id = ?', [user.u_id], (err, friends) => {
+                if (err) {
+                    return res.status(500).json({ error: err.message });
+                }
+                res.status(200).json({
+                    message: `User ${user.u_name} logged in successfully`,
+                    username: user.u_name,
+                    streak: user.u_streak,
+                    userId: user.u_id,
+                    friends
+                });
+            });
         });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -85,9 +97,43 @@ app.route('/streak/:username')
         }
     });
 
-// important for testing
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+// Save gratitude entry to the database
+app.post('/saveGratitude', (req, res) => {
+    const { content, userId, date } = req.body;
+    const insertQuery = 'INSERT INTO grateful_entry (g_content, fk_user, g_date) VALUES (?, ?, ?)';
+    db.run(insertQuery, [content, userId, date], function(err) {
+        if (err) {
+            console.error('Error inserting gratitude entry:', err);
+            res.status(500).json({ error: 'Error inserting gratitude entry' });
+        } else {
+            res.status(200).json({ message: 'Gratitude entry saved successfully!' });
+        }
+    });
+});
+
+// Fetch grateful entries for a specific user
+app.get('/gratefulEntries/:userId', (req, res) => {
+    const userId = req.params.userId;
+    const selectQuery = 'SELECT g_content, g_date FROM grateful_entry WHERE fk_user = ?';
+    db.all(selectQuery, [userId], (err, rows) => {
+        if (err) {
+            console.error('Error fetching grateful entries:', err);
+            res.status(500).json({ error: 'Error fetching grateful entries' });
+        } else {
+            res.status(200).json({ entries: rows });
+        }
+    });
+});
+
+// Route to search for users
+app.get('/searchUsers', (req, res) => {
+    const { query } = req.query;
+    db.all('SELECT u_id, u_name, u_streak FROM user WHERE u_name LIKE ?', [`%${query}%`], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(200).json({ users: rows });
+    });
 });
 
 // Route for allowing a user to follow another user
@@ -118,4 +164,9 @@ app.delete('/unfollow', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+});
+
+// Important for testing
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });
