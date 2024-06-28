@@ -3,7 +3,7 @@
     <div class="content-block">
       <div class="info-section">
         <h2>Create an Account for Procrastinot</h2>
-        <p>Join Procrastinot today and start building habits that will help you achieve your goals. This platform aims towards supporting you, with easily tracking your progress and staying motivated. Hence, don't wait any longer — Sign Up now and take the first step towards a better you!</p>
+        <p>Join Procrastinot today and start building habits that will help you achieve your goals. This platform aims to support you with easily tracking your progress and staying motivated. Hence, don't wait any longer — Sign Up now and take the first step towards a better you!</p>
       </div>
       <div class="divider"></div>
       <div class="form-section">
@@ -19,15 +19,13 @@
           </div>
           <button type="submit">Sign Up</button>
         </form>
-        <p class="login-link">Already have an account? <a href="#" @click="goToLogin">Back to Login</a></p>
+        <p class="login-link">Already have an account? <a href="#" @click="showLogin">Back to Login</a></p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   name: 'Register',
   data() {
@@ -38,30 +36,29 @@ export default {
   },
   methods: {
     async register() {
-      const newUser = {
-        username: this.newUsername,
-        password: this.newPassword
-      };
       try {
-        const response = await axios.post('http://localhost:1234/register', newUser,
-            {
-              headers: {
-                "Cache-Control": "no-cache",
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-              },
-            });
-        console.log(response.data); // Handle response as needed
-        alert('User registered successfully!');
+        const response = await fetch('http://localhost:1234/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username: this.newUsername, password: this.newPassword })
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert('User registered successfully');
+          window.location.hash = '/login';
+        } else {
+          console.error('Registration failed:', data.message);
+          alert('Registration failed: ' + data.message);
+        }
       } catch (error) {
-        console.error('Registration failed:', error);
-        alert('Registration failed, please try again!');
+        console.error('Registration error:', error);
+        alert('Registration error: ' + error.message);
       }
-      this.newUsername = '';
-      this.newPassword = '';
     },
-    goToLogin() {
-      this.$emit('go-to-login');
+    showLogin() {
+      window.location.hash = '/login';
     }
   }
 };

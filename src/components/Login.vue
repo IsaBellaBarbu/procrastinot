@@ -1,73 +1,3 @@
-<script>
-export default {
-  name: 'Login',
-  components: {
-    Register: () => import('./Register.vue')
-  },
-  data() {
-    return {
-      username: '',
-      password: '',
-      showLoginForm: true,
-      showRegisterForm: false
-    };
-  },
-  methods: {
-    async login() {
-      try {
-        const response = await fetch('http://localhost:1234/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username: this.username, password: this.password })
-        });
-        const data = await response.json();
-        if (response.ok) {
-          localStorage.setItem('token', data.token);
-          this.$router.push('/');
-        } else {
-          console.error('Login failed:', data.message);
-        }
-      } catch (error) {
-        console.error('Login error:', error);
-      }
-    },
-    async register(newUser) {
-      try {
-        const response = await fetch('http://localhost:1234/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-          body: JSON.stringify(newUser)
-        });
-        const data = await response.json();
-        if (response.ok) {
-          this.showRegisterForm = false;
-          this.showLoginForm = true;
-          this.$router.push('/');
-        } else {
-          console.error('Registration failed:', data.message);
-        }
-      } catch (error) {
-        console.error('Registration error:', error);
-      }
-    },
-    toggleRegisterForm() {
-      this.showLoginForm = !this.showLoginForm;
-      this.showRegisterForm = !this.showRegisterForm;
-    },
-    goToLogin() {
-      this.showRegisterForm = false;
-      this.showLoginForm = true;
-    }
-  }
-};
-</script>
-
-
 <template>
   <div class="login-container">
     <div class="content-block" v-if="showLoginForm">
@@ -84,12 +14,53 @@ export default {
           </div>
           <button type="submit">Sign In</button>
         </form>
-        <p class="register-link">Don't have an account? <a href="#" @click="toggleRegisterForm">Register</a></p>
+        <p class="register-link">Don't have an account? <a href="#" @click="showRegister">Register</a></p>
       </div>
     </div>
-    <register v-if="showRegisterForm" @register="register" @cancel="toggleRegisterForm" @go-to-login="goToLogin"></register>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'Login',
+  data() {
+    return {
+      username: '',
+      password: '',
+      showLoginForm: true
+    };
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await fetch('http://localhost:1234/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username: this.username, password: this.password })
+        });
+        const data = await response.json();
+        if (response.ok) {
+          alert(data.message);
+          localStorage.setItem('token', data.token); // If you are using a token
+          localStorage.setItem('username', data.username); // Store the username
+          window.location.hash = '/';
+        } else {
+          console.error('Login failed:', data.message);
+          alert('Login failed: ' + data.message);
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('Login error: ' + error.message);
+      }
+    },
+    showRegister() {
+      window.location.hash = '/register';
+    }
+  }
+};
+</script>
 
 
 <style scoped>

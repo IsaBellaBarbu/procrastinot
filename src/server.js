@@ -14,6 +14,7 @@ const db = new sqlite3.Database("./src/db.sqlite", sqlite3.OPEN_READWRITE, (err)
     console.log('Database Connected');
 });
 
+// Registering route
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -29,6 +30,31 @@ app.post('/register', async (req, res) => {
     }
 });
 
+// Login route
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        db.get('SELECT * FROM user WHERE u_name = ?', [username], async (err, user) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            if (!user) {
+                return res.status(401).json({ message: 'Invalid credentials' });
+            }
+            const isPasswordValid = await bcrypt.compare(password, user.u_pw);
+            if (!isPasswordValid) {
+                return res.status(401).json({ message: 'Invalid credentials' });
+            }
+            // For now, we return the username
+            res.status(200).json({ message: `User ${user.u_name} logged in successfully`, username: user.u_name });
+        });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+// important for testing
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
@@ -62,3 +88,4 @@ app.delete('/unfollow', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+

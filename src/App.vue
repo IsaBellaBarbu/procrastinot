@@ -21,6 +21,7 @@ const routes = {
 }
 
 const currentPath = ref(window.location.hash)
+const username = ref(localStorage.getItem('username') || ''); // Add a ref for username
 
 // Update currentPath on hash change
 window.addEventListener('hashchange', () => {
@@ -31,13 +32,22 @@ window.addEventListener('hashchange', () => {
 const currentView = computed(() => {
   return routes[currentPath.value.slice(1) || '/'] || NotFound
 })
+
+// Logging the user out
+const logout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('username'); // Remove the username from local storage
+  username.value = ''; // Clear the username
+  alert('User logged out successfully');
+  currentPath.value = '#/login';
+}
 </script>
 
 <template>
   <v-app>
     <v-main>
-      <Dashboard :current-path="currentPath"/>
-      <component :is="currentView" />
+      <Dashboard :current-path="currentPath" @logout="logout" :username="username"/>
+      <component :is="currentView" :username="username.value"/>
       <v-footer>2024 -- Isa Barbu </v-footer>
     </v-main>
   </v-app>
@@ -80,5 +90,4 @@ v-footer {
   padding: 1rem;
   text-align: right;
 }
-
 </style>
