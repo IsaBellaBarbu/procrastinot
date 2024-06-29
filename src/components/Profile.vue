@@ -135,10 +135,6 @@ export default {
 .glass {
   padding: 5rem;
   width: 100%;
-  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
-  backdrop-filter: blur(3px);
-  border-radius: 190px;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
   display: flex;
   align-content: center;
   justify-content: center;
@@ -149,9 +145,9 @@ export default {
 
 .profile-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .profile-picture {
@@ -164,25 +160,34 @@ export default {
 
 .nickname input {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #e8e8e8;
   border-radius: 5px;
   margin-bottom: 10px;
 }
 
+input{
+  color: white;
+  border-color: floralwhite;
+}
 .username span {
-  color: #777;
+  color: #ffe6e6;
 }
 
 .basic-info {
-  background-color: white;
-  padding: 2rem;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
+  box-shadow: 0 8px 32px 0 rgba(217, 220, 234, 0.22);
+  backdrop-filter: blur(3px);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
 }
 
 .basic-info h2 {
-  color: #333;
+  color: #ffffff;
   margin-bottom: 20px;
 }
 
@@ -193,16 +198,18 @@ export default {
 }
 
 .info-item {
+  color: white;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
 .info-label {
-  color: #666;
+  color: #ffffff;
 }
 
 .edit-button {
+  color: white;
   background: none;
   border: none;
   cursor: pointer;
@@ -210,8 +217,10 @@ export default {
 }
 
 .edit-button:hover {
-  background-color: #f0f0f0;
-  border-radius: 50%;
+  color: white;
+  background-color: rgba(169, 188, 255, 0.76);
+  border-radius: 100%;
+
 }
 
 .overview-header {
@@ -220,46 +229,67 @@ export default {
 }
 
 .overview {
-  background-color: white;
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
+  box-shadow: 0 8px 32px 0 rgba(217, 220, 234, 0.22);
+  backdrop-filter: blur(3px);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   padding: 2rem;
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .streak-info {
+  color: white;
   display: flex;
   align-items: center;
 }
 
 .flame-icon {
   margin-right: 10px;
+  color: white;
+
 }
 
 .streak-count {
+  color: white;
   font-size: 24px;
   font-weight: bold;
 }
 
 .usage-duration {
-  color: #777;
+  color: #ffffff;
+}
+
+.usage-duration span{
+  color: #e9b800;
 }
 
 .joined-info {
-  background-color: white;
-  padding: 2rem;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
+  box-shadow: 0 8px 32px 0 rgba(217, 220, 234, 0.22);
+  backdrop-filter: blur(3px);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  padding: 2rem;
 }
 
 .joined-info h2 {
-  color: #333;
+  color: #ffffff;
   margin-bottom: 20px;
 }
 
 .followers,
 .following {
+  color: white;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -267,12 +297,13 @@ export default {
 
 .divider {
   height: 24px;
-  border-left: 1px solid #ccc;
+  border-left: 1px solid #f1e9e9;
   margin: 0 10px;
 }
 
 .number {
-  font-size: 20px;
+  color: #ffdede;
+  font-size: 30px;
   font-weight: bold;
 }
 </style>

@@ -14,6 +14,7 @@
       <div class="divider"></div>
       <a href="#/login" :class="{ active: currentPath.value === '#/login' }">Log-In</a>
       <a href="#/register" :class="{ active: currentPath.value === '#/register' }">Register Here!</a>
+      <button @click="logout" class="nav-link">Logout</button>
     </div>
   </div>
 </template>
@@ -35,6 +36,10 @@ export default {
   methods: {
     toggleDrawer() {
       this.drawerOpen = !this.drawerOpen;
+    },
+    logout() {
+      localStorage.removeItem('token'); // Clear the token from localStorage
+      this.$emit('logout');
     }
   }
 };
@@ -93,7 +98,7 @@ p {
   height: 800px;
 }
 
-a {
+a, .nav-link {
   display: inline-block;
   background: rgba(255, 255, 255, 0.1);
   color: white;
@@ -108,18 +113,18 @@ a {
   margin: 5px;
 }
 
-a.active {
+a.active, .nav-link.active {
   background-color: rgba(255, 0, 0, 0.8);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
 }
 
-a:hover {
+a:hover, .nav-link:hover {
   background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   transform: scale(1.05);
 }
 
-a:active {
+a:active, .nav-link:active {
   background-color: rgba(255, 255, 255, 0.3);
   transform: scale(0.98);
 }

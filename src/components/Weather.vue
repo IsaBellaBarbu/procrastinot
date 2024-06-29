@@ -61,6 +61,7 @@ export default {
 </script>
 
 <template>
+  <div class="all">
   <div id="main" :class="isDay ? 'day' : 'night'">
     <div class="container">
       <h1 class="title text-center">Weather in</h1>
@@ -119,28 +120,44 @@ export default {
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 
 <style scoped>
-#main {
+.all{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+}
+
+#main.night {
+  background: linear-gradient(130deg, rgba(146, 236, 225, 0.44), rgba(3, 10, 103, 0.47));
+  box-shadow: 0 8px 32px 0 rgba(217, 220, 234, 0.22);
+  backdrop-filter: blur( 3px );
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  max-width: 800px;
+  display: flex;
+}
+#main.day{
+  background: linear-gradient(130deg, rgba(225, 30, 77, 0.62), rgba(255, 156, 7, 0.78));
+  box-shadow: 0 8px 32px 0 rgba(217, 220, 234, 0.22);
+  backdrop-filter: blur( 3px );
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  max-width: 800px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.5s ease;
-}
-#main.night {
-  background: linear-gradient(130deg, rgba(255, 255, 255, 0.44), rgba(65, 81, 255, 0.3));
-  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
-  backdrop-filter: blur( 3px );
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
+
 }
 .container {
   max-width: 400px;
   min-width: 360px;
   padding: 20px;
   border-radius: 16px;
-  text-align: center; /* Center the contents */
+  text-align: center;
 
 }
 .title {
@@ -150,8 +167,8 @@ export default {
 }
 
 .form-container {
-  display: inline-block; /* Make form container inline-block to center it */
-  width: 100%; /* Optional: Ensures the form takes up the full width */
+  display: inline-block;
+  width: 100%;
 }
 
 .form-rounded {
@@ -159,12 +176,12 @@ export default {
 }
 .form-control {
   margin-bottom: 1rem;
-  text-align: center; /* Center the input text */
-  color: #fff; /* Make input text white */
-  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+  text-align: center;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .form-control::placeholder {
-  color: #fde5e5; /* Greyish placeholder text */
+  color: #fde5e5;
 }
 .form-control:focus {
   box-shadow: none;
@@ -180,7 +197,7 @@ export default {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 .city-name {
-  color: #6f00ff;
+  color: #2d3bd5;
 }
 .city-name p {
   font-weight: 400;

@@ -68,8 +68,8 @@ export default {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10%;
   padding: 32px;
+  column-gap: 17%;
 }
 </style>
 
