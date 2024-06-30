@@ -76,6 +76,7 @@ export default {
 
 <template>
   <div class="all">
+    <!-- We will check if night or day in the searched city, so can adjust background  -->
     <div id="main" :class="isDay ? 'day' : 'night'">
       <div class="container">
         <h1 class="title text-center">Weather in</h1>
@@ -147,6 +148,7 @@ export default {
   width: 100%;
 
 }
+
 
 #main.night {
   background: linear-gradient(130deg, rgba(146, 236, 225, 0.44), rgba(3, 10, 103, 0.47));

@@ -1,29 +1,28 @@
-# procrastinot
+# Procrastinot
 
-This template should help get you started developing with Vue 3 in Vite.
+Procrastinot offers users a better way to organise themselves with daily Check-Ins, To-Do Lists and ultimately to stop procrastinating.
 
-## Recommended IDE Setup
+## Functions
+- [x] reactive design, usable for example on iPhone SE or 11/12, etc
+- [x] Register
+- [x] Login
+- [x] Logout
+- [x] ToDo List 
+- [x] Pomodoro Timer
+- [x] Weather API integration
+- [x] Mood Tracker
+- [x] Grateful Entries
+- [x] Journal Entries
+- [ ] Follow Friends 
+- [ ] proper database connections
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Technologies
+- Vue
+- Vuetify
+- JavaScript/Node.js
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+Optional:
+For a better understanding on how to use the webiste, please use the Procrastinot User Guide File.
+## Contributors
+Isa Bella | Matrikel nummer siehe Abgabe  

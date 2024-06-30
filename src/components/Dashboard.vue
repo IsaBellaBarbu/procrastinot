@@ -9,7 +9,6 @@
       <a href="#/" :class="{ active: currentPath.value === '#/' }">Homebase</a>
       <a href="#/focus-mode" :class="{ active: currentPath.value === '#/focus-mode' }">Focus Mode</a>
       <a href="#/journal" :class="{ active: currentPath.value === '#/journal' }">Journal</a>
-      <a href="#/profile" :class="{ active: currentPath.value === '#/profile' }">Profile</a>
       <div class="divider"></div>
       <a href="#/login" :class="{ active: currentPath.value === '#/login' }">Log-In</a>
       <a href="#/register" :class="{ active: currentPath.value === '#/register' }">Register Here!</a>
