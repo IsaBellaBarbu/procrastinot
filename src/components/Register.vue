@@ -19,7 +19,6 @@
           </div>
           <button type="submit">Sign Up</button>
         </form>
-        <p class="login-link">Already have an account? <router-link to="/login">Back to Login</router-link></p>
       </div>
     </div>
   </div>
@@ -44,7 +43,6 @@ export default {
           password: this.newPassword
         });
         alert('User registered successfully');
-        this.$router.push('/login'); // Redirect to login after successful registration
       } catch (error) {
         console.error('Registration error:', error.response ? error.response.data.message : error.message);
         alert('Registration failed: ' + (error.response ? error.response.data.message : error.message));
@@ -63,6 +61,7 @@ export default {
   width: 100%;
   min-height: 100vh;
   padding: 2rem;
+
 }
 
 .content-block {

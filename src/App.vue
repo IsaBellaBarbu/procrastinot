@@ -36,11 +36,11 @@ const currentView = computed(() => {
 // Logging the user out
 const logout = () => {
   localStorage.removeItem('token');
-  localStorage.removeItem('username'); // Remove the username from local storage
-  localStorage.removeItem('userMood'); // Remove mood data from local storage
-  username.value = ''; // Clear the username
+  localStorage.removeItem('username');
+  localStorage.removeItem('userMood');
+  username.value = '';
   alert('User logged out successfully');
-  window.location.hash = '#/login'; // Redirect to login page
+  window.location.hash = '#/login';
 }
 </script>
 

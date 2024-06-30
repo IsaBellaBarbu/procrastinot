@@ -13,7 +13,7 @@
     <div v-for="friend in friends" :key="friend.u_id" class="friend-field glass">
       <span>{{ friend.u_name }}</span>
       <span>{{ friend.u_streak }} 🔥</span>
-      <button class="delete-button" @click="removeFriend(friend.u_id)" v-if="friend.u_name !== ''">
+      <button class="delete-button" @click="removeFriend(friend.u_id)">
         <i class="material-icons">delete</i>
       </button>
     </div>
@@ -26,7 +26,7 @@ export default {
     return {
       searchQuery: '',
       searchResults: [],
-      friends: JSON.parse(localStorage.getItem('friends')) || [],
+      friends: JSON.parse(localStorage.getItem('friends')) || [], // Initialize from localStorage
       noResultsMessage: false,
       userId: 'actualUserId' // Replace with actual user ID from authentication/session
     };
@@ -42,59 +42,38 @@ export default {
             this.noResultsMessage = this.searchResults.length === 0;
           } else {
             console.error('Search request failed with status:', response.status);
+            this.searchResults = [];
+            this.noResultsMessage = true;
           }
         } catch (error) {
           console.error('Error fetching search results:', error);
+          this.searchResults = [];
+          this.noResultsMessage = true;
         }
       } else {
         this.searchResults = [];
         this.noResultsMessage = false;
       }
     },
-    async addFriend(user) {
+    addFriend(user) {
       if (this.friends.some(friend => friend.u_id === user.u_id)) {
         console.log('User is already a friend');
         return;
       }
 
-      try {
-        const response = await fetch('http://localhost:1234/follow', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ followerId: this.userId, followedId: user.u_id })
-        });
-
-        if (response.ok) {
-          this.friends.push(user);
-          localStorage.setItem('friends', JSON.stringify(this.friends));
-        } else {
-          console.error('Failed to add friend:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error adding friend:', error);
-      }
+      // Simulate adding friend (update localStorage and Vue data)
+      this.friends.push(user);
+      localStorage.setItem('friends', JSON.stringify(this.friends));
     },
-    async removeFriend(friendId) {
-      try {
-        const response = await fetch('http://localhost:1234/unfollow', {
-          method: 'DELETE',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ followerId: this.userId, followedId: friendId })
-        });
-
-        if (response.ok) {
-          this.friends = this.friends.filter(friend => friend.u_id !== friendId);
-          localStorage.setItem('friends', JSON.stringify(this.friends));
-        } else {
-          console.error('Failed to remove friend:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error removing friend:', error);
-      }
+    removeFriend(friendId) {
+      // Simulate removing friend (update localStorage and Vue data)
+      this.friends = this.friends.filter(friend => friend.u_id !== friendId);
+      localStorage.setItem('friends', JSON.stringify(this.friends));
     }
   }
 };
 </script>
+
 
 <style scoped>
 .follow-for-follow {

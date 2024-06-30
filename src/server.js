@@ -19,12 +19,12 @@ const db = new sqlite3.Database("./src/db.sqlite", sqlite3.OPEN_READWRITE, (err)
 // Helper function to get today's date
 const getTodayDate = () => moment().utc().format('YYYY-MM-DD'); // Get today's date in UTC
 
-// Register route
+// Registering route
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        db.run('INSERT INTO user (u_name, u_pw, u_streak, last_check_in_date) VALUES (?, ?, ?, ?)', [username, hashedPassword, 0, null], (err) => {
+        db.run('INSERT INTO user (u_name, u_pw, u_streak) VALUES (?, ?, ?)', [username, hashedPassword, 0], (err) => {
             if (err) {
                 return res.status(500).json({ error: err.message });
             }
@@ -102,7 +102,7 @@ app.post('/checkIn', (req, res) => {
     });
 });
 
-// Route to fetch or update streak count (Optional, for admin or other purposes)
+// Route to fetch or update streak count
 app.route('/streak/:username')
     .get((req, res) => {
         const { username } = req.params;
@@ -166,16 +166,24 @@ app.get('/searchUsers', (req, res) => {
     });
 });
 
+
+/*
 // Route for allowing a user to follow another user
 app.post('/follow', async (req, res) => {
     const { followerId, followedId } = req.body;
-    db.run('INSERT INTO user_follow (fk_u_id, fk_followed_u_id) VALUES (?, ?)', [followerId, followedId], (err) => {
+    const insertQuery = 'INSERT INTO user_follow (fk_u_id, fk_followed_u_id) VALUES (?, ?)';
+
+    console.log('Insert Query:', insertQuery, followerId, followedId); // Log SQL query and parameters
+
+    db.run(insertQuery, [followerId, followedId], (err) => {
         if (err) {
+            console.error('Error following user:', err.message);
             return res.status(500).json({ error: err.message });
         }
         res.status(201).json({ message: 'User followed successfully' });
     });
 });
+
 
 // Route for allowing a user to unfollow another user
 app.delete('/unfollow', async (req, res) => {
@@ -187,11 +195,14 @@ app.delete('/unfollow', async (req, res) => {
         res.status(200).json({ message: 'User unfollowed successfully' });
     });
 });
+*/
+
+
 
 // Start server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
-// Logging to verify dates (optional, for debugging)
+// Logging to verify dates
 console.log('Today:', getTodayDate());
