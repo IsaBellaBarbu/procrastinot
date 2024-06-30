@@ -233,6 +233,7 @@ export default {
 
 <style scoped>
 .timer-container {
+  user-select: none;
   display: flex;
   flex-direction: column;
   align-items: center;

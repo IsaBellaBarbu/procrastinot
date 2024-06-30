@@ -157,6 +157,7 @@ export default {
 
 <style scoped>
 .todo-list {
+  user-select: none;
   display: flex;
   align-items: center;
   justify-content: center;

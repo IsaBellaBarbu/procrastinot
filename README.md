@@ -21,8 +21,13 @@ Procrastinot offers users a better way to organise themselves with daily Check-I
 - Vuetify
 - JavaScript/Node.js
 
-
+Important:
+- npm install --legacy-peer-deps (in worst case szenario erstmal delete package lock und dann alle node_modules löschen und dann nochmal command asuführen)
+- npm run start-server
+- npm run dev
+- [ ] bei wetter eingabe: am besten bitte einmal berlin und dann tokyo eingeben 
+ 
 Optional:
 For a better understanding on how to use the webiste, please use the Procrastinot User Guide File.
 ## Contributors
-Isa Bella | Matrikel nummer siehe Abgabe  
+Isa Bella Barbu | Matrikel nummer siehe Abgabe  
