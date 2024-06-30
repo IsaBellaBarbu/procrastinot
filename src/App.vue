@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from 'vue';
-
 import Login from "@/components/Login.vue";
 import Register from "@/components/Register.vue";
 import Homebase from "@/components/Homebase.vue";
@@ -9,6 +8,7 @@ import Journal from "@/components/Journal.vue";
 import FocusMode from "@/components/FocusMode.vue";
 import Stats from "@/components/Stats.vue";
 import Profile from "@/components/Profile.vue";
+import NotFound from "@/components/NotFound.vue"; // Make sure to add NotFound component
 
 const routes = {
   '/register': Register,
@@ -20,33 +20,34 @@ const routes = {
   '/profile': Profile,
 }
 
-const currentPath = ref(window.location.hash)
-const username = ref(localStorage.getItem('username') || ''); // Add a ref for username
+const currentPath = ref(window.location.hash);
+const username = ref(localStorage.getItem('username') || '');
 
 // Update currentPath on hash change
 window.addEventListener('hashchange', () => {
-  currentPath.value = window.location.hash
-})
+  currentPath.value = window.location.hash;
+});
 
 // Compute the current view component
 const currentView = computed(() => {
-  return routes[currentPath.value.slice(1) || '/'] || NotFound
-})
+  return routes[currentPath.value.slice(1) || '/'] || NotFound;
+});
 
 // Logging the user out
 const logout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('username'); // Remove the username from local storage
+  localStorage.removeItem('userMood'); // Remove mood data from local storage
   username.value = ''; // Clear the username
   alert('User logged out successfully');
-  currentPath.value = '#/login';
+  window.location.hash = '#/login'; // Redirect to login page
 }
 </script>
 
 <template>
   <v-app>
     <v-main>
-      <Dashboard :current-path="currentPath" @logout="logout" :username="username"/>
+      <Dashboard :currentPath="currentPath" @logout="logout" :username="username"/>
       <component :is="currentView" :username="username.value"/>
       <v-footer>2024 -- Isa Barbu </v-footer>
     </v-main>

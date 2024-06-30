@@ -20,12 +20,26 @@ export default {
       return `${day}/${month}/${year}`;
     },
     saveEntry() {
-      // You can send an HTTP request to save the entry to the database here
-      // For example, using Axios or Fetch
-      // After saving, you can emit an event to inform the parent component
-      this.$emit('done');
+      if (this.headline && this.content) {
+        const entry = {
+          category: this.categoryName,
+          headline: this.headline,
+          content: this.content,
+          date: this.currentDate
+        };
+        // Save entry to local storage
+        let journalEntries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+        journalEntries.unshift(entry); // Use unshift to add to the beginning
+        localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+        alert('Entry saved!');
+        this.$emit('entry-saved', entry); // Emit event with entry data
+        this.headline = '';
+        this.content = '';
+      } else {
+        alert('Please fill in both the headline and content.');
+      }
     }
-  },
+  }
 };
 </script>
 
@@ -43,7 +57,6 @@ export default {
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>
@@ -53,22 +66,19 @@ export default {
   width: 100%;
 }
 
-.glass{
+.glass {
   padding: 40px;
   width: 100%;
-  background: rgba(215, 237, 245, 0.47);
-  box-shadow: 0 12px 50px 0 rgba(3, 15, 63, 0.66);
-  backdrop-filter: blur( 5px );
-  -webkit-backdrop-filter: blur( 10px );
-  border-radius: 10px;
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
+  box-shadow: 0 8px 32px 0 rgba(217, 220, 234, 0.22);
+  backdrop-filter: blur(3px);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   display: flex;
   align-content: center;
   justify-content: center;
   flex-direction: column;
-  gap: 20px;  /*pro tip von lukas, abstand zw drin in elems*/
+  gap: 20px;
 }
-
 
 .category-header {
   display: flex;
@@ -78,6 +88,7 @@ export default {
   padding-bottom: 20px;
   font-size: 22px;
   font-family: monospace;
+  color: #141064;
 }
 
 .category-name {
@@ -88,31 +99,32 @@ export default {
   font-size: 0.8rem;
   color: rgba(25, 25, 98, 0.6);
   text-align: end;
-
 }
 
 .entry {
   width: 100%;
   font-family: monospace;
-
+  color: white;
 }
 
-.headline{
+.headline {
   width: 100%;
   padding: 12px;
   margin-bottom: 10px;
   border: 1px solid #19196299;
   border-radius: 5px;
   font-size: 16px;
+  color: white;
 }
 
-.content{
+.content {
   width: 100%;
   padding: 12px;
   margin-bottom: 10px;
   border: 1px solid #19196299;
   border-radius: 5px;
   font-size: 14px;
+  color: white;
 }
 
 .headline::placeholder,
@@ -138,6 +150,5 @@ export default {
 
 .save-btn:hover {
   background-color: #9592ff;
-
 }
 </style>

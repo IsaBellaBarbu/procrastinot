@@ -1,9 +1,11 @@
 <script>
 import MoodDiagram from "@/components/MoodDiagram.vue";
+import ListGratefulEntries from "@/components/ListGratefulEntries.vue";
 
 export default {
   components: {
-    MoodDiagram
+    MoodDiagram,
+    ListGratefulEntries,
   }
 
 }
@@ -13,17 +15,12 @@ export default {
   <div class="stats">
     <div  class="content glass">
 
-      <MoodDiagram/>
+      <ListGratefulEntries/>
     </div>
 
   </div>
 </template>
 
 <style scoped>
-.content{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e9b800;
-}
+
 </style>

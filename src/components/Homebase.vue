@@ -8,10 +8,12 @@
           <v-lazy><GratitudeList/></v-lazy>
         </div>
         <div class="mixed">
-          <v-lazy><MoodTracker/></v-lazy>
-          <v-lazy><FollowForFollow/></v-lazy>
+          <v-lazy><Weather/></v-lazy>
+          <div class="right-side">
+            <v-lazy><MoodTracker/></v-lazy>
+            <v-lazy><FollowForFollow/></v-lazy>
+          </div>
         </div>
-        <v-lazy><Weather/></v-lazy>
       </div>
     </v-lazy>
   </div>
@@ -36,13 +38,12 @@ export default {
 </script>
 
 <style scoped>
-.homebase p{
+.homebase p {
   text-align: center;
   font-size: 33px;
   color: white;
-  padding:50px;
+  padding: 50px;
   font-weight: bold;
-
 }
 
 .content {
@@ -54,23 +55,27 @@ export default {
   color: white;
 }
 
-.blues{
+.blues {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10%;
-  padding: 32px;    /*Ksenias rec: only 8-er with padding for UI */
+  padding: 32px;
 }
 
-.mixed{
+.mixed {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   flex-wrap: wrap;
   padding: 32px;
-  column-gap: 17%;
+  gap: 17%;
+}
+
+.right-side {
+  display: flex;
+  flex-direction: column;
+  gap: 15%;
 }
 </style>
-
-

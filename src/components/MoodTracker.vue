@@ -1,14 +1,30 @@
-<script>
-import smile from '@/assets/images/smile.png'
-import okay from '@/assets/images/okay.png'
-import neutral from '@/assets/images/neutral.png'
-import sad from '@/assets/images/sad.png'
-import angry from '@/assets/images/angry.png'
-export default {
+<template>
+  <div class="mood-tracker">
+    <h1 for="moodInput">Track Mood:</h1>
+    <div class="mood-buttons glass">
+      <button
+          v-for="(emotion, index) in emotions"
+          :key="index"
+          @click="setMood(emotion.image)"
+          :class="{ active: mood === emotion.image }"
+      >
+        <img :src="emotion.image" :alt="emotion.name">
+      </button>
+    </div>
+  </div>
+</template>
 
+<script>
+import smile from '@/assets/images/smile.png';
+import okay from '@/assets/images/okay.png';
+import neutral from '@/assets/images/neutral.png';
+import sad from '@/assets/images/sad.png';
+import angry from '@/assets/images/angry.png';
+
+export default {
   data() {
     return {
-      mood: '',
+      mood: localStorage.getItem('userMood') || '', // Retrieve mood from localStorage or set to an empty string
       emotions: [
         { name: 'Happy', image: smile },
         { name: 'Okay', image: okay },
@@ -21,23 +37,11 @@ export default {
   methods: {
     setMood(emotion) {
       this.mood = emotion;
+      localStorage.setItem('userMood', emotion); // Save mood to localStorage
     }
   }
-}
+};
 </script>
-
-<template>
-  <div class="mood-tracker">
-    <h1 for="moodInput">Track Mood:</h1>
-    <div class="mood-buttons glass">
-      <button v-for="(emotion, index) in emotions" :key="index" @click="setMood(emotion.image)" :class="{ active: mood === emotion.image }">
-        <img :src="emotion.image" alt="Mood">
-      </button>
-    </div>
-  </div>
-</template>
-
-
 
 <style scoped>
 .mood-tracker {
@@ -46,7 +50,7 @@ export default {
   align-items: center;
   justify-content: center;
   max-width: 310px;
-
+  margin-top: 40px;
 }
 
 .mood-buttons {
@@ -58,8 +62,8 @@ export default {
   padding: 1rem;
   width: 100%;
   background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(94, 184, 231, 0.3));
-  box-shadow: 0 8px 32px 0 rgba(3, 15, 63, 0.66);
-  backdrop-filter: blur( 3px );
+  box-shadow: 0 8px 32px 0 rgba(217, 220, 234, 0.22);
+  backdrop-filter: blur(3px);
   border: 1.5px solid rgba(255, 255, 255, 0.45);
 }
 

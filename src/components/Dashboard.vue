@@ -9,7 +9,6 @@
       <a href="#/" :class="{ active: currentPath.value === '#/' }">Homebase</a>
       <a href="#/focus-mode" :class="{ active: currentPath.value === '#/focus-mode' }">Focus Mode</a>
       <a href="#/journal" :class="{ active: currentPath.value === '#/journal' }">Journal</a>
-      <a href="#/stats" :class="{ active: currentPath.value === '#/stats' }">My Stats</a>
       <a href="#/profile" :class="{ active: currentPath.value === '#/profile' }">Profile</a>
       <div class="divider"></div>
       <a href="#/login" :class="{ active: currentPath.value === '#/login' }">Log-In</a>
@@ -39,6 +38,7 @@ export default {
     },
     logout() {
       localStorage.removeItem('token'); // Clear the token from localStorage
+      localStorage.removeItem('userMood'); // Clear the mood from localStorage
       this.$emit('logout');
     }
   }

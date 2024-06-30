@@ -34,24 +34,25 @@
     <div class="entry" v-for="(todo, index) in todos" :key="index">
       <input
           type="checkbox"
-          v-model="todos[index].done"
+          v-model="todo.done"
           class="checkbox"
           :id="'checkbox-' + index"
-          v-if="todos[index].text !== ''"
+          @change="updateTodoCompletion(index)"
+          v-if="todo.text !== ''"
       />
-      <label :for="'checkbox-' + index" class="checkbox-label" v-if="todos[index].text !== ''">
-        <i class="material-icons">{{ todos[index].done ? 'check_box' : 'check_box_outline_blank' }}</i>
+      <label :for="'checkbox-' + index" class="checkbox-label" v-if="todo.text !== ''">
+        <i class="material-icons">{{ todo.done ? 'check_box' : 'check_box_outline_blank' }}</i>
       </label>
       <input
           type="text"
-          v-model="todos[index].text"
+          v-model="todo.text"
           @keyup.enter="handleEnter(index)"
           class="input"
-          :class="{ 'done': todos[index].done }"
+          :class="{ 'done': todo.done }"
           :placeholder="getPlaceholderText(index)"
           :ref="`input-${index}`"
       />
-      <button class="delete-button" @click="deleteTodo(index)" v-if="todos[index].text !== ''">
+      <button class="delete-button" @click="deleteTodo(index)" v-if="todo.text !== ''">
         <i class="material-icons">delete</i>
       </button>
     </div>
@@ -62,7 +63,7 @@
 export default {
   data() {
     return {
-      todos: [{ text: '', done: false }],
+      todos: [{ text: '', done: false, timestamp: null }],
       placeholderText: 'Enter To-Do...',
       radius: 50,
     };
@@ -89,7 +90,8 @@ export default {
   methods: {
     handleEnter(index) {
       if (this.todos[index].text !== '') {
-        this.todos.splice(index + 1, 0, { text: '', done: false });
+        this.todos.splice(index + 1, 0, { text: '', done: false, timestamp: null });
+        this.saveTodos();
         this.$nextTick(() => {
           const nextInput = this.$refs[`input-${index + 1}`][0];
           if (nextInput) {
@@ -104,10 +106,52 @@ export default {
     deleteTodo(index) {
       this.todos.splice(index, 1);
       if (this.todos.length === 0) {
-        this.todos.push({ text: '', done: false });
+        this.todos.push({ text: '', done: false, timestamp: null });
       }
+      this.saveTodos();
     },
+    updateTodoCompletion(index) {
+      this.todos[index].timestamp = this.todos[index].done ? new Date().toISOString() : null;
+      this.saveTodos();
+    },
+    saveTodos() {
+      localStorage.setItem('todos', JSON.stringify(this.todos));
+    },
+    loadTodos() {
+      const savedTodos = localStorage.getItem('todos');
+      if (savedTodos) {
+        try {
+          let todos = JSON.parse(savedTodos);
+          if (!Array.isArray(todos)) {
+            todos = [{ text: '', done: false, timestamp: null }];
+          }
+          const now = new Date();
+          const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+          this.todos = todos.filter(todo => {
+            if (todo.done && todo.timestamp) {
+              const todoDate = new Date(todo.timestamp);
+              return todoDate >= today;
+            }
+            return true;
+          });
+        } catch (e) {
+          console.error('Error parsing todos from localStorage', e);
+          this.todos = [{ text: '', done: false, timestamp: null }];
+        }
+      }
+    }
   },
+  watch: {
+    todos: {
+      handler() {
+        this.saveTodos();
+      },
+      deep: true
+    }
+  },
+  created() {
+    this.loadTodos();
+  }
 };
 </script>
 

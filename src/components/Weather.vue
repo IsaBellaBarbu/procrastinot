@@ -30,13 +30,14 @@ export default {
         const data = await response.json();
         console.log(data);
         this.citySearch = "";
-        this.weather.cityName = data.city;
+        this.weather.cityName = data.name;
         this.weather.country = data.sys.country;
         //Math.round for easier look of numbers
         this.weather.temperature = Math.round(data.main.temp);
         this.weather.description = data.weather[0].description;
         this.weather.lowTemp = Math.round(data.main.temp_min);
         this.weather.highTemp = Math.round(data.main.temp_max);
+        this.weather.feelsLike = Math.round(data.main.feels_like);
         this.weather.humidity = Math.round(data.main.humidity);
 
         const timeOfDay = data.weather[0].icon;
@@ -50,78 +51,92 @@ export default {
 
         this.visible = true;
         this.cityFound = false;
+
+        // Store the city in localStorage
+        localStorage.setItem("lastCity", data.name);
       } catch (error) {
         console.log(error);
         this.cityFound = true;
         this.visible = false;
       }
     },
+    loadLastCity: function () {
+      const lastCity = localStorage.getItem("lastCity");
+      if (lastCity) {
+        this.citySearch = lastCity;
+        this.getWeather();
+      }
+    },
+  },
+  mounted() {
+    this.loadLastCity();
   },
 };
 </script>
 
 <template>
   <div class="all">
-  <div id="main" :class="isDay ? 'day' : 'night'">
-    <div class="container">
-      <h1 class="title text-center">Weather in</h1>
-      <div class="form-container">
-        <form class="search-location" v-on:submit.prevent="getWeather">
-          <input
-              type="text"
-              class="form-control text-muted form-rounded p-4 shadow-sm"
-              placeholder="What City?"
-              v-model="citySearch"
-              autocomplete="off"
-          />
-        </form>
-      </div>
-      <p class="text-center my-3" v-if="cityFound">No city found or no internet connection</p>
-      <div
-          class="card glass rounded my-3 shadow-lg overflow-hidden"
-          v-if="visible"
-      >
-        <!-- Top of card starts here -->
-        <div class="card-top text-center">
-          <div class="city-name my-3">
-            <p>{{ weather.cityName }}</p>
-            <span>...</span>
-            <p>{{ weather.country }}</p>
-          </div>
+    <div id="main" :class="isDay ? 'day' : 'night'">
+      <div class="container">
+        <h1 class="title text-center">Weather in</h1>
+        <div class="form-container">
+          <form class="search-location" v-on:submit.prevent="getWeather">
+            <input
+                type="text"
+                class="form-control text-muted form-rounded p-4 shadow-sm"
+                placeholder="What City?"
+                v-model="citySearch"
+                autocomplete="off"
+            />
+          </form>
         </div>
-        <!-- top of card ends here -->
+        <p class="text-center my-3" v-if="cityFound">No city found or no internet connection</p>
+        <div
+            class="card glass rounded my-3 shadow-lg overflow-hidden"
+            v-if="visible"
+        >
+          <!-- Top of card starts here -->
+          <div class="card-top text-center">
+            <div class="city-name my-3">
+              <p>{{ weather.cityName }}</p>
+              <span>...</span>
+              <p>{{ weather.country }}</p>
+            </div>
+          </div>
+          <!-- top of card ends here -->
 
-        <!-- card middle body -->
-        <div class="card-body">
-          <!-- card middle starts here -->
-          <div class="card-mid">
-            <div class="row">
-              <div class="col-12 text-center temp">
-                <span>{{ weather.temperature }}&deg;C</span>
-                <p class="my-4">{{ weather.description }}</p>
+          <!-- card middle body -->
+          <div class="card-body">
+            <!-- card middle starts here -->
+            <div class="card-mid">
+              <div class="row">
+                <div class="col-12 text-center temp">
+                  <span>{{ weather.temperature }}&deg;C</span>
+                  <p class="my-4">{{ weather.description }}</p>
+                </div>
               </div>
             </div>
-          </div>
-          <!-- card middle ends here -->
+            <!-- card middle ends here -->
 
-          <!-- card bottom starts here -->
-          <div class="card-bottom px-5 py-4 row">
-            <div class="col text-center">
-              <p>{{ weather.feelsLike }}&deg;C</p>
-              <span>Feels like</span>
+            <!-- card bottom starts here -->
+            <div class="card-bottom px-5 py-4 row">
+              <div class="col text-center">
+                <p>{{ weather.feelsLike }}&deg;C</p>
+                <span>Feels like</span>
+              </div>
+              <div class="col text-center">
+                <p>{{ weather.humidity }}%</p>
+                <span>Humidity</span>
+              </div>
             </div>
-            <div class="col text-center">
-              <p>{{ weather.humidity }}%</p>
-              <span>Humidity</span>
-            </div>
+            <!-- card bottom ends here -->
           </div>
-          <!-- card bottom ends here -->
         </div>
       </div>
     </div>
   </div>
-  </div>
 </template>
+
 
 
 <style scoped>
