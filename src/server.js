@@ -50,8 +50,9 @@ app.post('/login', async (req, res) => {
             if (!isPasswordValid) {
                 return res.status(401).json({ message: 'Invalid credentials' });
             }
+
             // Fetch friends
-            db.all('SELECT u_name, u_streak FROM user JOIN user_follow ON user.u_id = user_follow.fk_followed_u_id WHERE user_follow.fk_u_id = ?', [user.u_id], (err, friends) => {
+            db.all('SELECT user.u_id, user.u_name, user.u_streak FROM user JOIN user_follow ON user.u_id = user_follow.fk_followed_u_id WHERE user_follow.fk_u_id = ?', [user.u_id], (err, friends) => {
                 if (err) {
                     return res.status(500).json({ error: err.message });
                 }
@@ -68,6 +69,7 @@ app.post('/login', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
 
 // Check-in route
 app.post('/checkIn', (req, res) => {
@@ -102,7 +104,7 @@ app.post('/checkIn', (req, res) => {
     });
 });
 
-// Route to fetch or update streak count (Optional, for admin or other purposes)
+// Route to fetch or update streak count
 app.route('/streak/:username')
     .get((req, res) => {
         const { username } = req.params;
@@ -127,6 +129,7 @@ app.route('/streak/:username')
         });
     });
 
+
 // Save gratitude entry to the database
 app.post('/saveGratitude', (req, res) => {
     const { content, userId, date } = req.body;
@@ -140,6 +143,7 @@ app.post('/saveGratitude', (req, res) => {
         }
     });
 });
+
 
 // Fetch grateful entries for a specific user
 app.get('/gratefulEntries/:userId', (req, res) => {
@@ -155,19 +159,8 @@ app.get('/gratefulEntries/:userId', (req, res) => {
     });
 });
 
-// Route to search for users
-app.get('/searchUsers', (req, res) => {
-    const { query } = req.query;
-    db.all('SELECT u_id, u_name, u_streak FROM user WHERE u_name LIKE ?', [`%${query}%`], (err, rows) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        res.status(200).json({ users: rows });
-    });
-});
-
-// Route for allowing a user to follow another user
-app.post('/follow', async (req, res) => {
+// Follow route
+app.post('/follow', (req, res) => {
     const { followerId, followedId } = req.body;
     db.run('INSERT INTO user_follow (fk_u_id, fk_followed_u_id) VALUES (?, ?)', [followerId, followedId], (err) => {
         if (err) {
@@ -177,14 +170,37 @@ app.post('/follow', async (req, res) => {
     });
 });
 
-// Route for allowing a user to unfollow another user
-app.delete('/unfollow', async (req, res) => {
+// Unfollow route
+app.delete('/unfollow', (req, res) => {
     const { followerId, followedId } = req.body;
     db.run('DELETE FROM user_follow WHERE fk_u_id = ? AND fk_followed_u_id = ?', [followerId, followedId], (err) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
         res.status(200).json({ message: 'User unfollowed successfully' });
+    });
+});
+
+// Fetch follow requests route
+app.get('/followRequests', (req, res) => {
+    // Mock implementation - modify as needed
+    res.status(200).json({ requests: [] });
+});
+
+// Accept follow request route
+app.post('/acceptFollowRequest', (req, res) => {
+    // Mock implementation - modify as needed
+    res.status(200).json({ message: 'Follow request accepted' });
+});
+
+// Route to search for users
+app.get('/searchUsers', (req, res) => {
+    const { query } = req.query;
+    db.all('SELECT u_id, u_name, u_streak FROM user WHERE u_name LIKE ?', [`%${query}%`], (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(200).json({ users: rows });
     });
 });
 
